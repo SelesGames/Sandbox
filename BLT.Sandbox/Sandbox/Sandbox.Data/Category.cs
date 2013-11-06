@@ -6,8 +6,8 @@ namespace Sandbox.Data
     public class Category
     {
         // surrogate and primary key
-        public int Id { get; set; }
-        public Guid CategoryId { get; set; }
+        //public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
         public int ProjectCount { get; set; }

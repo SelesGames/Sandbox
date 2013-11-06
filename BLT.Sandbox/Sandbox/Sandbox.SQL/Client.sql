@@ -1,13 +1,13 @@
 ﻿CREATE TABLE [dbo].[Client]
 (
-    [Id] INT NOT NULL PRIMARY KEY CLUSTERED IDENTITY,
-    [ClientId] UNIQUEIDENTIFIER NOT NULL,
+    [SG_KEY] INT NOT NULL PRIMARY KEY CLUSTERED IDENTITY,
+    [Id] UNIQUEIDENTIFIER NOT NULL,
     [Name] NVARCHAR(MAX) NOT NULL, 
     [ProjectCount] INT NOT NULL, 
-    [LatestPostId] UNIQUEIDENTIFIER NULL, 
-    [LatestPostTime] DATETIME NULL, 
-    [LatestPostName] NVARCHAR(MAX) NULL
+    [LatestProjectId] UNIQUEIDENTIFIER, 
+    [LatestProjectTime] DATETIME, 
+    [LatestProjectName] NVARCHAR(MAX)
 )
 
 GO
-CREATE UNIQUE INDEX [KeyIndex] ON [dbo].[Client] ([ClientId])
+CREATE UNIQUE INDEX [KeyIndex] ON [dbo].[Client] ([Id])

@@ -6,8 +6,8 @@ namespace Sandbox.Data
     public class Client
     {
         // surrogate and primary key
-        public int Id { get; set; }
-        public Guid ClientId { get; set; }
+        //public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
         public int ProjectCount { get; set; }
@@ -29,10 +29,10 @@ namespace Sandbox.Data
             Users = new List<User>();
         }
 
-        //public void AddCampaign(Campaign campaign)
-        //{
-        //    campaign.Client = this;
-        //    Campaigns.Add(campaign);
-        //}
+        public void AddCampaign(Campaign campaign)
+        {
+            campaign.Client = this;
+            Campaigns.Add(campaign);
+        }
     }
 }

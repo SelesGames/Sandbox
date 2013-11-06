@@ -5,8 +5,8 @@ namespace Sandbox.Data
     public class Content
     {
         // surrogate and primary key
-        public int Id { get; set; }
-        public Guid ContentId { get; set; }
+        //public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
         public string ContentUrl { get; set; }

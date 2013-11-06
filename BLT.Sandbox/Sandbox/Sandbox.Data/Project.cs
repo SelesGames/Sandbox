@@ -6,11 +6,11 @@ namespace Sandbox.Data
     public class Project
     {
         // surrogate and primary key
-        public int Id { get; set; }
-        public Guid ProjectId { get; set; }
+        //public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
-        public DateTime LatestRoundModified { get; set; }
+        public DateTime? LatestRoundModified { get; set; }
 
         // foreign key + relationships
         public Guid ClientId { get; set; }

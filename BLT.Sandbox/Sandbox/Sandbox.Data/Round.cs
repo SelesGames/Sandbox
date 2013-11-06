@@ -6,8 +6,8 @@ namespace Sandbox.Data
     public class Round
     {
         // surrogate and primary key
-        public int Id { get; set; }
-        public Guid RoundId { get; set; }
+        //public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public int FileCount { get; set; }
         public DateTime CreatedOn { get; set; }

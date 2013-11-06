@@ -60,12 +60,13 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Client.sql" />
-    <Build Include="Project.sql" />
+    <Build Include="Campaign.sql" />
     <Build Include="Category.sql" />
-    <Build Include="Post.sql" />
-    <Build Include="Media.sql" />
+    <Build Include="Project.sql" />
+    <Build Include="Content.sql" />
     <Build Include="User.sql" />
     <Build Include="UserProjectPermission.sql" />
     <Build Include="UserClientPermission.sql" />
+    <Build Include="Round.sql" />
   </ItemGroup>
 </Project>

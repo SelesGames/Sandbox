@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Sandbox.Data
 {
-    public class User
+    public class User// : EntityBase
     {
-        //public int Id { get; set; }
+        // primary key
         public Guid Id { get; set; }
 
         public virtual ICollection<Client> Clients { get; set; }

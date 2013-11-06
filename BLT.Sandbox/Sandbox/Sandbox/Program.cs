@@ -9,7 +9,7 @@ namespace Sandbox
 {
     class Program
     {
-        static string connectionString = "test33";
+        static string connectionString = "test57";
 
         static void Main(string[] args)
         {
@@ -54,9 +54,17 @@ namespace Sandbox
         static async Task Initialize()
         {
             await CreateClients();
-            await VerifyClientsCreated();
+            await OutputClients();
             await AddCampaignsToClients();
-            await VerifyCampaignsCreated();
+            await OutputCampaigns();
+            await AddProjectsToCampaigns();
+            await OutputProjects();
+
+            await DeleteClient();
+
+            await OutputClients();
+            await OutputCampaigns();
+            await OutputProjects();
         }
 
         static async Task CreateClients()
@@ -85,7 +93,7 @@ namespace Sandbox
             }
         }
 
-        static async Task VerifyClientsCreated()
+        static async Task OutputClients()
         {
             using (var context = new DataContext(connectionString))
             {
@@ -177,7 +185,7 @@ namespace Sandbox
             }
         }
 
-        static async Task VerifyCampaignsCreated()
+        static async Task OutputCampaigns()
         {
             using (var context = new DataContext(connectionString))
             {
@@ -185,6 +193,8 @@ namespace Sandbox
                     .Campaigns
                     .Include(o => o.Client)  // tells the query to *eager* load Client
                     .Select(o => new { ClientName = o.Client.Name, CampaignName = o.Name })
+                    .OrderBy(o => o.ClientName)
+                    .ThenBy(o => o.CampaignName)
                     .ToListAsync();
 
                 Console.WriteLine("CAMPAIGNS:");
@@ -192,6 +202,97 @@ namespace Sandbox
 
                 foreach (var campaign in campaigns)
                     Console.WriteLine("{0} - {1}", campaign.ClientName, campaign.CampaignName);
+
+                Console.WriteLine();
+            }
+        }
+
+        static async Task AddProjectsToCampaigns()
+        {
+            using (var context = new DataContext(connectionString))
+            {
+                var avengers = await context.Campaigns.SingleAsync(o => o.Name.Contains("avengers"));
+                var category = new Category { Id = Guid.NewGuid(), Name = "blogs" };
+
+                avengers.AddProject(
+                    new Project
+                    {
+                        Category = category,
+                        Id = Guid.Parse("e34256bc5509453d9e969bee2ed9b439"), 
+                        Name = "Avengers Blog #1"
+                    });
+
+                avengers.AddProject(
+                    new Project
+                    {
+                        Category = category,
+                        Id = Guid.Parse("feddea4607084a2d8fa28a3fe3800678"),
+                        Name = "Avengers Blog #2"
+                    });
+
+                await context.SaveChangesAsync();
+            }
+
+            using (var context = new DataContext(connectionString))
+            {
+                var simpsons = await context.Campaigns.SingleAsync(o => o.Name.Contains("simpsons"));
+                var websites = new Category { Id = Guid.NewGuid(), Name = "web sites" };
+
+                simpsons.AddProject(
+                    new Project
+                    {
+                        Category = websites,
+                        Id = Guid.Parse("c5fd3e6593584593bd49a88e78ffb4cf"),
+                        Name = "Simpsons Fox.com site"
+                    });
+
+                simpsons.AddProject(
+                    new Project
+                    {
+                        Category = websites,
+                        Id = Guid.Parse("5281c1fe5a6040d19d56c986dbaaa529"),
+                        Name = "Halloween website"
+                    });
+
+                await context.SaveChangesAsync();
+            }
+        }
+
+        static async Task OutputProjects()
+        {
+            using (var context = new DataContext(connectionString))
+            {
+                var projects = await context
+                    .Projects
+                    .Include(o => o.Client)  // tells the query to *eager* load Client
+                    .Include(o => o.Campaign)
+                    .Include(o => o.Category)
+                    .Select(o => new { ClientName = o.Client.Name, CampaignName = o.Campaign.Name, CategoryName = o.Category.Name, ProjectName = o.Name })
+                    .OrderBy(o => o.ClientName)
+                    .ThenBy(o => o.CampaignName)
+                    .ThenBy(o => o.ProjectName)
+                    .ToListAsync();
+
+                Console.WriteLine("PROJECTS:");
+                Console.WriteLine("***********");
+
+                foreach (var o in projects)
+                    Console.WriteLine("{0} - {1} - {2} (category: {3})", o.ClientName, o.CampaignName, o.ProjectName, o.CategoryName);
+
+                Console.WriteLine();
+            }
+        }
+
+        static async Task DeleteClient()
+        {
+            using (var context = new DataContext(connectionString))
+            {
+                var marvel = await context.Clients.SingleAsync(o => o.Name.Contains("marvel"));
+
+                Console.WriteLine("******** DELETING MARVEL ********");
+
+                context.Clients.Remove(marvel);
+                await context.SaveChangesAsync();
 
                 Console.WriteLine();
             }

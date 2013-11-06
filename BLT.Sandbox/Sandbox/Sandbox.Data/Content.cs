@@ -2,10 +2,9 @@
 
 namespace Sandbox.Data
 {
-    public class Content
+    public class Content //: EntityBase
     {
-        // surrogate and primary key
-        //public int Id { get; set; }
+        // primary key
         public Guid Id { get; set; }
 
         public string Name { get; set; }

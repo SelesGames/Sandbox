@@ -3,10 +3,9 @@ using System.Collections.Generic;
 
 namespace Sandbox.Data
 {
-    public class Campaign
+    public class Campaign //: EntityBase
     {
-        // surrogate and primary key
-        //public int Id { get; set; }
+        // primary key
         public Guid Id { get; set; }
 
         public string Name { get; set; }
@@ -27,6 +26,13 @@ namespace Sandbox.Data
         {
             Projects = new List<Project>();
             Users = new List<User>();
+        }
+
+        public void AddProject(Project project)
+        {
+            project.Client = Client;
+            project.Campaign = this;
+            Projects.Add(project);
         }
     }
 }

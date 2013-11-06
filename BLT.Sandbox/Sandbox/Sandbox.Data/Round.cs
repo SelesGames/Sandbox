@@ -3,10 +3,9 @@ using System.Collections.Generic;
 
 namespace Sandbox.Data
 {
-    public class Round
+    public class Round //: EntityBase
     {
-        // surrogate and primary key
-        //public int Id { get; set; }
+        // primary key
         public Guid Id { get; set; }
 
         public int FileCount { get; set; }

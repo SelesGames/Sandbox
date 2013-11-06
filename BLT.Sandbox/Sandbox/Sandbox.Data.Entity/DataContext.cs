@@ -34,22 +34,29 @@ namespace Sandbox.Data.Entity
             // removes the default option of pluralizing table names: i.e. if the class is 'Campaign' it tries to name the SQL table to 'Campaigns'
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            //modelBuilder.Entity<Client>().HasKey(o => o.ClientId);
-            //modelBuilder.Entity<Project>().HasKey(o => o.ProjectId);
-            //modelBuilder.Entity<Post>().HasKey(o => o.PostId);
-            //modelBuilder.Entity<PostMediaItem>().HasKey(o => o.PostMediaItemId);
-            //modelBuilder.Entity<Category>().HasKey(o => o.CategoryId);
-            //modelBuilder.Entity<User>().HasKey(o => o.UserId);
+            //modelBuilder.Conventions.Remove<AssociationInverseDiscoveryConvention>();
+            //modelBuilder.Conventions.Remove<ForeignKeyDiscoveryConvention>();
+            //modelBuilder.Conventions.Remove<ForeignKeyAssociationMultiplicityConvention>();
+            //modelBuilder.Conventions.Remove<ForeignKeyNavigationPropertyAttributeConvention>();
+            //modelBuilder.Conventions.Remove<ForeignKeyPrimitivePropertyAttributeConvention>();
+            //modelBuilder.Conventions.Remove<NavigationPropertyNameForeignKeyDiscoveryConvention>();
+            //modelBuilder.Conventions.Remove<PrimaryKeyNameForeignKeyDiscoveryConvention>();
+            //modelBuilder.Conventions.Remove<TypeNameForeignKeyDiscoveryConvention>();
+            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
-            // Client foreign key mappings
-            modelBuilder.Entity<Client>().HasOptional(o => o.LatestProject).WithRequired();
+            // Turn off Cascade-on-Delete
+            modelBuilder.Entity<Project>().HasRequired(o => o.Client).WithMany(o => (ICollection<Project>)o.Projects).HasForeignKey(o => o.ClientId).WillCascadeOnDelete(false);
+
+
+            // Specify OPTIONAL foreign key mappings
+            modelBuilder.Entity<Client>().HasOptional(o => o.LatestProject).WithOptionalDependent();
+            modelBuilder.Entity<Campaign>().HasOptional(o => o.LatestProject).WithOptionalDependent();
 
             //// Campaign foreign key mappings
             //modelBuilder.Entity<Campaign>().HasRequired(o => o.Client).WithMany(o => o.Campaigns).HasForeignKey(o => o.ClientId);
-            modelBuilder.Entity<Campaign>().HasOptional(o => o.LatestProject).WithRequired();
 
             //// Project foreign key mappings
-            modelBuilder.Entity<Project>().HasRequired(o => o.Client).WithMany(o => (ICollection<Project>)o.Projects).HasForeignKey(o => o.ClientId).WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Project>().HasRequired(o => o.Client).WithMany(o => (ICollection<Project>)o.Projects).HasForeignKey(o => o.ClientId).WillCascadeOnDelete(false);
             //modelBuilder.Entity<Project>().HasRequired(o => o.Campaign).WithMany(o => o.Projects).HasForeignKey(o => o.CampaignId);
             //modelBuilder.Entity<Project>().HasRequired(o => o.Category).WithMany(o => o.Projects).HasForeignKey(o => o.CategoryId);
 
@@ -58,7 +65,6 @@ namespace Sandbox.Data.Entity
 
             //// Content foreign key mappings
             //modelBuilder.Entity<Content>().HasRequired(o => o.Round).WithMany(o => o.Contents).HasForeignKey(o => o.RoundId);
-
 
             // many-to-many
             modelBuilder.Entity<User>()

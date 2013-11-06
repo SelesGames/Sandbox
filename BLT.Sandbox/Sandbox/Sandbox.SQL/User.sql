@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[User]
+(
+    [Id] INT NOT NULL PRIMARY KEY CLUSTERED IDENTITY,
+    [UserId] UNIQUEIDENTIFIER NOT NULL
+)
+
+GO
+CREATE UNIQUE INDEX [KeyIndex] ON [dbo].[User] ([UserId])

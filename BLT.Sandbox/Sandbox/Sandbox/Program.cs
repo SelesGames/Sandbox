@@ -9,7 +9,7 @@ namespace Sandbox
 {
     class Program
     {
-        static string connectionString = "test57";
+        static string connectionString = "test58";
 
         static void Main(string[] args)
         {

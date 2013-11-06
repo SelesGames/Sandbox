@@ -3,11 +3,8 @@ using System.Collections.Generic;
 
 namespace Sandbox.Data
 {
-    public class Campaign //: EntityBase
+    public class Campaign : EntityBase
     {
-        // primary key
-        public Guid Id { get; set; }
-
         public string Name { get; set; }
         public int ProjectCount { get; set; }
         public DateTime? LatestProjectTime { get; set; }

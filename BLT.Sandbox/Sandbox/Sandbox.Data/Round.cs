@@ -3,11 +3,8 @@ using System.Collections.Generic;
 
 namespace Sandbox.Data
 {
-    public class Round //: EntityBase
+    public class Round : EntityBase
     {
-        // primary key
-        public Guid Id { get; set; }
-
         public int FileCount { get; set; }
         public DateTime CreatedOn { get; set; }
 

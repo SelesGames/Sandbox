@@ -3,11 +3,8 @@ using System.Collections.Generic;
 
 namespace Sandbox.Data
 {
-    public class Category //: EntityBase
+    public class Category : EntityBase
     {
-        // primary key
-        public Guid Id { get; set; }
-
         public string Name { get; set; }
         public int ProjectCount { get; set; }
 

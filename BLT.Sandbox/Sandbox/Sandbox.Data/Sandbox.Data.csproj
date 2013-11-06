@@ -37,6 +37,9 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="EntityBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Project.cs" />
     <Compile Include="Content.cs" />
     <Compile Include="Campaign.cs" />

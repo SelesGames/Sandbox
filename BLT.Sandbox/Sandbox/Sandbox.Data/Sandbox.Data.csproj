@@ -35,7 +35,6 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Category.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="EntityBase.cs">
       <SubType>Code</SubType>

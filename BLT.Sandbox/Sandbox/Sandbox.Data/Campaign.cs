@@ -17,12 +17,12 @@ namespace Sandbox.Data
         public virtual Project LatestProject { get; set; }
 
         public virtual ICollection<Project> Projects { get; set; }
-        public virtual ICollection<User> Users { get; set; }
+        //public virtual ICollection<User> Users { get; set; }
 
         public Campaign()
         {
             Projects = new List<Project>();
-            Users = new List<User>();
+           // Users = new List<User>();
         }
 
         public void AddProject(Project project)

@@ -9,8 +9,6 @@ namespace Sandbox
 {
     class Program
     {
-        static string connectionString = "test59";
-
         static void Main(string[] args)
         {
             Initialize().Wait();
@@ -22,7 +20,7 @@ namespace Sandbox
 
         //private static async System.Threading.Tasks.Task RunTest()
         //{
-        //    var dataContext = new DataContext(connectionString);
+        //    var dataContext = CreateContext();
 
         //    var userId = Guid.NewGuid();
         //    var categoryId = Guid.NewGuid();
@@ -69,7 +67,7 @@ namespace Sandbox
 
         static async Task CreateClients()
         {
-            using (var context = new DataContext(connectionString))
+            using (var context = CreateContext())
             {
                 context.Clients.AddRange(new[] {
                     new Client
@@ -95,7 +93,7 @@ namespace Sandbox
 
         static async Task OutputClients()
         {
-            using (var context = new DataContext(connectionString))
+            using (var context = CreateContext())
             {
                 Console.WriteLine("CLIENTS:");
                 Console.WriteLine("***********");
@@ -111,7 +109,7 @@ namespace Sandbox
 
         static async Task AddCampaignsToClients()
         {
-            using (var context = new DataContext(connectionString))
+            using (var context = CreateContext())
             {
                 var marvel = await context.Clients.SingleAsync(o => o.Name.Equals("marvel", StringComparison.OrdinalIgnoreCase));
 
@@ -140,7 +138,7 @@ namespace Sandbox
                 await context.SaveChangesAsync();
             }
 
-            using (var context = new DataContext(connectionString))
+            using (var context = CreateContext())
             {
                 var cbs = await context.Clients.SingleAsync(o => o.Name.Equals("cbs", StringComparison.OrdinalIgnoreCase));
 
@@ -157,7 +155,7 @@ namespace Sandbox
 
             Client fox;
 
-            using (var context = new DataContext(connectionString))
+            using (var context = CreateContext())
             {
                 fox = await context.Clients.SingleAsync(o => o.Name.Contains("fox"));
 
@@ -171,7 +169,7 @@ namespace Sandbox
                 await context.SaveChangesAsync();
             }
 
-            using (var context = new DataContext(connectionString))
+            using (var context = CreateContext())
             {
                 context.Campaigns.Add(
                     new Campaign
@@ -187,7 +185,7 @@ namespace Sandbox
 
         static async Task OutputCampaigns()
         {
-            using (var context = new DataContext(connectionString))
+            using (var context = CreateContext())
             {
                 var campaigns = await context
                     .Campaigns
@@ -209,15 +207,13 @@ namespace Sandbox
 
         static async Task AddProjectsToCampaigns()
         {
-            using (var context = new DataContext(connectionString))
+            using (var context = CreateContext())
             {
                 var avengers = await context.Campaigns.SingleAsync(o => o.Name.Contains("avengers"));
-                var category = new Category { Id = Guid.NewGuid(), Name = "blogs" };
 
                 avengers.AddProject(
                     new Project
                     {
-                        Category = category,
                         Id = Guid.Parse("e34256bc5509453d9e969bee2ed9b439"), 
                         Name = "Avengers Blog #1"
                     });
@@ -225,7 +221,6 @@ namespace Sandbox
                 avengers.AddProject(
                     new Project
                     {
-                        Category = category,
                         Id = Guid.Parse("feddea4607084a2d8fa28a3fe3800678"),
                         Name = "Avengers Blog #2"
                     });
@@ -233,15 +228,13 @@ namespace Sandbox
                 await context.SaveChangesAsync();
             }
 
-            using (var context = new DataContext(connectionString))
+            using (var context = CreateContext())
             {
                 var simpsons = await context.Campaigns.SingleAsync(o => o.Name.Contains("simpsons"));
-                var websites = new Category { Id = Guid.NewGuid(), Name = "web sites" };
 
                 simpsons.AddProject(
                     new Project
                     {
-                        Category = websites,
                         Id = Guid.Parse("c5fd3e6593584593bd49a88e78ffb4cf"),
                         Name = "Simpsons Fox.com site"
                     });
@@ -249,7 +242,6 @@ namespace Sandbox
                 simpsons.AddProject(
                     new Project
                     {
-                        Category = websites,
                         Id = Guid.Parse("5281c1fe5a6040d19d56c986dbaaa529"),
                         Name = "Halloween website"
                     });
@@ -260,14 +252,13 @@ namespace Sandbox
 
         static async Task OutputProjects()
         {
-            using (var context = new DataContext(connectionString))
+            using (var context = CreateContext())
             {
                 var projects = await context
                     .Projects
                     .Include(o => o.Client)  // tells the query to *eager* load Client
                     .Include(o => o.Campaign)
-                    .Include(o => o.Category)
-                    .Select(o => new { ClientName = o.Client.Name, CampaignName = o.Campaign.Name, CategoryName = o.Category.Name, ProjectName = o.Name })
+                    .Select(o => new { ClientName = o.Client.Name, CampaignName = o.Campaign.Name, ProjectName = o.Name })
                     .OrderBy(o => o.ClientName)
                     .ThenBy(o => o.CampaignName)
                     .ThenBy(o => o.ProjectName)
@@ -277,7 +268,7 @@ namespace Sandbox
                 Console.WriteLine("***********");
 
                 foreach (var o in projects)
-                    Console.WriteLine("{0} - {1} - {2} (category: {3})", o.ClientName, o.CampaignName, o.ProjectName, o.CategoryName);
+                    Console.WriteLine("{0} - {1} - {2}", o.ClientName, o.CampaignName, o.ProjectName);
 
                 Console.WriteLine();
             }
@@ -285,7 +276,7 @@ namespace Sandbox
 
         static async Task DeleteClient()
         {
-            using (var context = new DataContext(connectionString))
+            using (var context = CreateContext())
             {
                 var marvel = await context.Clients.SingleAsync(o => o.Name.Contains("marvel"));
 
@@ -296,6 +287,12 @@ namespace Sandbox
 
                 Console.WriteLine();
             }
+        }
+
+
+        static DataContext CreateContext()
+        {
+            return new DataContext();
         }
     }
 }

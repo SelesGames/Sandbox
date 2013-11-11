@@ -6,6 +6,7 @@ namespace Sandbox.Data
     public class Client : EntityBase
     {
         public string Name { get; set; }
+        public string LogoUrl { get; set; }
         public int ProjectCount { get; set; }
         public DateTime? LatestProjectTime { get; set; }
         public string LatestProjectName { get; set; }

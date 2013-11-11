@@ -6,6 +6,11 @@ namespace Sandbox.Data.Entity
 {
     public class DataContext : DbContext
     {
+        public DataContext() : base(Connection.CONNECTION_STRING)
+        {
+
+        }
+
         public DataContext(string connectionString)
             : base(connectionString)
         { 
@@ -24,7 +29,6 @@ namespace Sandbox.Data.Entity
         public DbSet<User> Users { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
-        public DbSet<Category> Categories { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Round> Rounds { get; set; }
         public DbSet<Content> Contents { get; set; }
@@ -67,15 +71,15 @@ namespace Sandbox.Data.Entity
             //modelBuilder.Entity<Content>().HasRequired(o => o.Round).WithMany(o => o.Contents).HasForeignKey(o => o.RoundId);
 
             // many-to-many
-            modelBuilder.Entity<User>()
-                .HasMany(o => o.Clients)
-                .WithMany(o => o.Users)
-                .Map(m => 
-                {
-                    m.ToTable("UserClientPermission");
-                    m.MapLeftKey("UserId");
-                    m.MapRightKey("ClientId");
-                });
+            //modelBuilder.Entity<User>()
+            //    .HasMany(o => o.Clients)
+            //    .WithMany(o => o.Users)
+            //    .Map(m => 
+            //    {
+            //        m.ToTable("UserClientPermission");
+            //        m.MapLeftKey("UserId");
+            //        m.MapRightKey("ClientId");
+            //    });
 
             base.OnModelCreating(modelBuilder);
         }

@@ -5,6 +5,9 @@ namespace Sandbox.Data
 {
     public class User : EntityBase
     {
+        public Guid ClientId { get; set; }
+        public virtual Client Client { get; set; }
+
         public virtual ICollection<Client> Clients { get; set; }
         public virtual ICollection<Campaign> Campaigns { get; set; }
 

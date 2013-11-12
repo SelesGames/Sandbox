@@ -51,6 +51,10 @@ namespace Sandbox
 
         static async Task Initialize()
         {
+            using (var context = CreateContext())
+            {
+                context.Database.Delete();
+            }
             await CreateClients();
             await OutputClients();
             await AddCampaignsToClients();
@@ -58,7 +62,7 @@ namespace Sandbox
             await AddProjectsToCampaigns();
             await OutputProjects();
 
-            await DeleteClient();
+            //await DeleteClient();
 
             await OutputClients();
             await OutputCampaigns();

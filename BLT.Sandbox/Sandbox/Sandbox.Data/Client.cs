@@ -26,10 +26,33 @@ namespace Sandbox.Data
             Users = new List<User>();
         }
 
-        public void AddCampaign(Campaign campaign)
+
+
+
+        #region Add/Remove methods
+
+        public void Add(Campaign campaign)
         {
             campaign.Client = this;
             Campaigns.Add(campaign);
         }
+
+        public void Remove(Campaign campaign)
+        {
+            Campaigns.Remove(campaign);
+        }
+
+        public void Add(User user)
+        {
+            user.Client = this;
+            Users.Add(user);
+        }
+
+        public void Remove(User user)
+        {
+            Users.Remove(user);
+        }
+
+        #endregion
     }
 }

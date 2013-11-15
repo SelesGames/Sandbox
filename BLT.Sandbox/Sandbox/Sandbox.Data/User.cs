@@ -8,13 +8,28 @@ namespace Sandbox.Data
         public Guid ClientId { get; set; }
         public virtual Client Client { get; set; }
 
-        public virtual ICollection<Client> Clients { get; set; }
-        public virtual ICollection<Campaign> Campaigns { get; set; }
+        public virtual ICollection<Campaign> AccessibleCampaigns { get; set; }
 
         public User()
         {
-            Clients = new List<Client>();
-            Campaigns = new List<Campaign>();
+            AccessibleCampaigns = new List<Campaign>();
         }
+
+
+
+
+        #region Add/Remove methods
+
+        public void AddAccessTo(Campaign campaign)
+        {
+            AccessibleCampaigns.Add(campaign);
+        }
+
+        public void RemoveAccessTo(Campaign campaign)
+        {
+            AccessibleCampaigns.Remove(campaign);
+        }
+
+        #endregion
     }
 }

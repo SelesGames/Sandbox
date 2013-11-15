@@ -15,13 +15,29 @@ namespace Sandbox.Data
         public virtual Client Client { get; set; }
         public virtual Campaign Campaign { get; set; }
 
-        string coverarturl;
-
         public virtual ICollection<Round> Rounds { get; set; }
 
         public Project()
         {
             Rounds = new List<Round>();
         }
+
+
+
+
+        #region Add/Remove methods
+
+        public void Add(Round round)
+        {
+            round.Project = this;
+            Rounds.Add(round);
+        }
+
+        public void Remove(Round round)
+        {
+            Rounds.Remove(round);
+        }
+
+        #endregion
     }
 }

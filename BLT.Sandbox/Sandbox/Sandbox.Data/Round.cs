@@ -18,5 +18,23 @@ namespace Sandbox.Data
         {
             Contents = new List<Content>();
         }
+
+
+
+
+        #region Add/Remove methods
+
+        public void Add(Content content)
+        {
+            content.Round = this;
+            Contents.Add(content);
+        }
+
+        public void Remove(Content content)
+        {
+            Contents.Remove(content);
+        }
+
+        #endregion
     }
 }

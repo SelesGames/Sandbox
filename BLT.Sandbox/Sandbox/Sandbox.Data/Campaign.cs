@@ -17,19 +17,41 @@ namespace Sandbox.Data
         public virtual Project LatestProject { get; set; }
 
         public virtual ICollection<Project> Projects { get; set; }
-        //public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<User> UsersWithAccess { get; set; }
 
         public Campaign()
         {
             Projects = new List<Project>();
-           // Users = new List<User>();
+            UsersWithAccess = new List<User>();
         }
 
-        public void AddProject(Project project)
+
+
+
+        #region Add/Remove methods
+
+        public void Add(Project project)
         {
             project.Client = Client;
             project.Campaign = this;
             Projects.Add(project);
         }
+
+        public void Remove(Project project)
+        {
+            Projects.Remove(project);
+        }
+
+        public void AddAccessFor(User user)
+        {
+            UsersWithAccess.Add(user);
+        }
+
+        public void RemoveAccessFor(User user)
+        {
+            UsersWithAccess.Remove(user);
+        }
+
+        #endregion
     }
 }

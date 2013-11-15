@@ -1,0 +1,122 @@
+﻿@model Sandbox.Data.Client
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Client</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LogoUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LogoUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProjectCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LatestProjectTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LatestProjectTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LatestProjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LatestProjectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LatestProjectId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LatestProjectId)
+        </dd>
+
+    </dl>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Client.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LatestProjectTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LatestProjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LatestProjectId)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LatestProjectTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LatestProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LatestProjectId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

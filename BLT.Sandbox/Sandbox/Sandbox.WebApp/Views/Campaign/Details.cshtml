@@ -1,4 +1,4 @@
-﻿@model Sandbox.Data.Client
+﻿@model Sandbox.Data.Campaign
 
 @{
     ViewBag.Title = "Details";
@@ -7,23 +7,23 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Client</h4>
+    <h4>Campaign</h4>
 	<hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Client.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Client.Name)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LogoUrl)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LogoUrl)
         </dd>
 
         <dt>

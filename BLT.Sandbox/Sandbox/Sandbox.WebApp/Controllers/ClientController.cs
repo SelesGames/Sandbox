@@ -12,7 +12,7 @@ using Sandbox.Data.Entity;
 
 namespace Sandbox.WebApp.Controllers
 {
-    public class ClientsController : Controller
+    public class ClientController : Controller
     {
         DataContext db = new DataContext();
 
@@ -30,7 +30,12 @@ namespace Sandbox.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = await db.Clients.FindAsync(id);
+
+            var client = await db.Clients
+                .Include(o => o.Campaigns)
+                .Where(o => o.Id == id)
+                .SingleOrDefaultAsync();
+
             if (client == null)
             {
                 return HttpNotFound();

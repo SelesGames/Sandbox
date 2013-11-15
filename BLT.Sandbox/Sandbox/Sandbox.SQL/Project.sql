@@ -4,10 +4,10 @@
     [Id] UNIQUEIDENTIFIER NOT NULL,
     [ClientId] UNIQUEIDENTIFIER NOT NULL,
     [CampaignId] UNIQUEIDENTIFIER NOT NULL,
-    [CategoryId] UNIQUEIDENTIFIER NOT NULL,
     --[ClientName] NVARCHAR(MAX) NOT NULL, only if we want to denormalize a bit
     --[CampaignName] NVARCHAR(MAX) NOT NULL, only if we want to denormalize a bit
-    [Name] NVARCHAR(MAX) NOT NULL, 
+    [Name] NVARCHAR(MAX) NOT NULL,
+	[CoverImageUrl] NVARCHAR(MAX),
     [LatestRoundModified] DATETIME
 )
 
@@ -16,6 +16,4 @@ CREATE UNIQUE INDEX [KeyIndex] ON [dbo].[Project] ([Id])
 GO
 CREATE CLUSTERED INDEX [ClusteredClientIndex] ON [dbo].[Project] ([ClientId],[SG_KEY])
 GO
-CREATE INDEX [ProjectIndex] ON [dbo].[Project] ([CampaignId])
-GO
-CREATE INDEX [CategoryIndex] ON [dbo].[Project] ([CategoryId])
+CREATE INDEX [CampaignIndex] ON [dbo].[Project] ([CampaignId])

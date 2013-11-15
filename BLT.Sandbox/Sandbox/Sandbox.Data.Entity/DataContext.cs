@@ -86,15 +86,15 @@ namespace Sandbox.Data.Entity
             //modelBuilder.Entity<Content>().HasRequired(o => o.Round).WithMany(o => o.Contents).HasForeignKey(o => o.RoundId);
 
             // many-to-many
-            //modelBuilder.Entity<User>()
-            //    .HasMany(o => o.Clients)
-            //    .WithMany(o => o.Users)
-            //    .Map(m => 
-            //    {
-            //        m.ToTable("UserClientPermission");
-            //        m.MapLeftKey("UserId");
-            //        m.MapRightKey("ClientId");
-            //    });
+            modelBuilder.Entity<User>()
+                .HasMany(o => o.AccessibleCampaigns)
+                .WithMany(o => o.UsersWithAccess)
+                .Map(m =>
+                {
+                    m.ToTable("UserCampaignPermission");
+                    m.MapLeftKey("UserId");
+                    m.MapRightKey("CampaignId");
+                });
 
             base.OnModelCreating(modelBuilder);
         }

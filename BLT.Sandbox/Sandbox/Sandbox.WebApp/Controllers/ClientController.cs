@@ -12,6 +12,7 @@ using Sandbox.Data.Entity;
 
 namespace Sandbox.WebApp.Controllers
 {
+    [Authorize]
     public class ClientController : Controller
     {
         DataContext db = new DataContext();

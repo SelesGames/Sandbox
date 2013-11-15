@@ -55,6 +55,7 @@ namespace Sandbox
             {
                 context.Database.Delete();
             }
+
             await CreateClients();
             await OutputClients();
             await AddCampaignsToClients();
@@ -163,7 +164,7 @@ namespace Sandbox
             {
                 fox = await context.Clients.SingleAsync(o => o.Name.Contains("fox"));
 
-                fox.AddCampaign(
+                fox.Add(
                     new Campaign
                     {
                         Id = Guid.Parse("f3ee12fb592b45c0a593f09a9c7f1230"),
@@ -215,14 +216,14 @@ namespace Sandbox
             {
                 var avengers = await context.Campaigns.SingleAsync(o => o.Name.Contains("avengers"));
 
-                avengers.AddProject(
+                avengers.Add(
                     new Project
                     {
                         Id = Guid.Parse("e34256bc5509453d9e969bee2ed9b439"), 
                         Name = "Avengers Blog #1"
                     });
 
-                avengers.AddProject(
+                avengers.Add(
                     new Project
                     {
                         Id = Guid.Parse("feddea4607084a2d8fa28a3fe3800678"),
@@ -236,14 +237,14 @@ namespace Sandbox
             {
                 var simpsons = await context.Campaigns.SingleAsync(o => o.Name.Contains("simpsons"));
 
-                simpsons.AddProject(
+                simpsons.Add(
                     new Project
                     {
                         Id = Guid.Parse("c5fd3e6593584593bd49a88e78ffb4cf"),
                         Name = "Simpsons Fox.com site"
                     });
 
-                simpsons.AddProject(
+                simpsons.Add(
                     new Project
                     {
                         Id = Guid.Parse("5281c1fe5a6040d19d56c986dbaaa529"),

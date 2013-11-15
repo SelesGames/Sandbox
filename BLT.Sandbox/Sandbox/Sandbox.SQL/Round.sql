@@ -10,4 +10,4 @@
 GO
 CREATE UNIQUE INDEX [KeyIndex] ON [dbo].[Round] ([Id])
 GO
-CREATE CLUSTERED INDEX [ClusteredClientIndex] ON [dbo].[Round] ([ProjectId],[SG_KEY])
+CREATE CLUSTERED INDEX [ClusteredProjectIndex] ON [dbo].[Round] ([ProjectId],[SG_KEY])

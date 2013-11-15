@@ -1,11 +1,11 @@
-﻿CREATE TABLE [dbo].[UserProjectPermission]
+﻿CREATE TABLE [dbo].[UserCampaignPermission]
 (
     [Id] INT NOT NULL PRIMARY KEY NONCLUSTERED IDENTITY,
     [UserId] UNIQUEIDENTIFIER NOT NULL,
-    [ProjectId] UNIQUEIDENTIFIER NOT NULL
+    [CampaignId] UNIQUEIDENTIFIER NOT NULL
 )
 
 GO
 CREATE CLUSTERED INDEX [ClusteredUserIndex] ON [dbo].[UserProjectPermission] ([UserId],[Id])
 GO
-CREATE INDEX [ProjectIndex] ON [dbo].[UserProjectPermission] ([ProjectId])
+CREATE INDEX [CampaignIndex] ON [dbo].[UserCampaignPermission] ([CampaignId])

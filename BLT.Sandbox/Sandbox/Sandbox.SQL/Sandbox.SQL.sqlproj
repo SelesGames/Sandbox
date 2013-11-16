@@ -64,8 +64,7 @@
     <Build Include="Project.sql" />
     <Build Include="Content.sql" />
     <Build Include="User.sql" />
-    <Build Include="UserProjectPermission.sql" />
-    <Build Include="UserClientPermission.sql" />
+    <Build Include="UserCampaignPermission.sql" />
     <Build Include="Round.sql" />
   </ItemGroup>
   <ItemGroup>

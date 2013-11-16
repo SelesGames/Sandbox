@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sandbox.Data
 {
@@ -12,17 +13,17 @@ namespace Sandbox.Data
 
         // foreign key + relationships
         public Guid ClientId { get; set; }
-        public Guid? LatestProjectId { get; set; }
+        //public Guid? LatestProjectId { get; set; }
         public virtual Client Client { get; set; }
-        public virtual Project LatestProject { get; set; }
+        //public virtual Project LatestProject { get; set; }
 
         public virtual ICollection<Project> Projects { get; set; }
-        public virtual ICollection<User> UsersWithAccess { get; set; }
+        public virtual ICollection<UserCampaignPermission> UsersWithAccess { get; set; }
 
         public Campaign()
         {
             Projects = new List<Project>();
-            UsersWithAccess = new List<User>();
+            UsersWithAccess = new List<UserCampaignPermission>();
         }
 
 
@@ -44,12 +45,25 @@ namespace Sandbox.Data
 
         public void AddAccessFor(User user)
         {
-            UsersWithAccess.Add(user);
+            var permission = new UserCampaignPermission { User = user, Campaign = this };
+            UsersWithAccess.Add(permission);
         }
 
         public void RemoveAccessFor(User user)
         {
-            UsersWithAccess.Remove(user);
+            var permission = UsersWithAccess.FirstOrDefault(o => o.User.Equals(user));
+            UsersWithAccess.Remove(permission);
+        }
+
+        public void AddAccessFor(UserCampaignPermission permission)
+        {
+            permission.Campaign = this;
+            UsersWithAccess.Add(permission);
+        }
+
+        public void RemoveAccessFor(UserCampaignPermission permission)
+        {
+            UsersWithAccess.Remove(permission);
         }
 
         #endregion

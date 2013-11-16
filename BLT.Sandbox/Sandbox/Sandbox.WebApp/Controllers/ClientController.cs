@@ -16,11 +16,16 @@ namespace Sandbox.WebApp.Controllers
     public class ClientController : Controller
     {
         DataContext db = new DataContext();
+        Guid userId;
 
         // GET: /Clients/
         public async Task<ActionResult> Index()
         {
-            var clients = await db.Clients.ToListAsync();
+            var clients = await db.Users.Where(o => o.Id == userId)
+                .SelectMany(o => o.AccessibleCampaigns)
+                .Select(o => o.Client)
+                .ToListAsync();
+
             return View(clients);
         }
 

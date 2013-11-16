@@ -6,6 +6,6 @@
 )
 
 GO
-CREATE CLUSTERED INDEX [ClusteredUserIndex] ON [dbo].[UserProjectPermission] ([UserId],[Id])
+CREATE CLUSTERED INDEX [ClusteredUserIndex] ON [dbo].[UserCampaignPermission] ([UserId],[Id])
 GO
 CREATE INDEX [CampaignIndex] ON [dbo].[UserCampaignPermission] ([CampaignId])

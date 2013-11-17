@@ -63,11 +63,14 @@ namespace Sandbox
             await AddProjectsToCampaigns();
             await OutputProjects();
 
+            await CreateUser();
+            await OutputClientsForUser();
+
             //await DeleteClient();
 
-            await OutputClients();
-            await OutputCampaigns();
-            await OutputProjects();
+            //await OutputClients();
+            //await OutputCampaigns();
+            //await OutputProjects();
         }
 
         static async Task CreateClients()
@@ -289,6 +292,50 @@ namespace Sandbox
 
                 context.Clients.Remove(marvel);
                 await context.SaveChangesAsync();
+
+                Console.WriteLine();
+            }
+        }
+
+        static async Task CreateUser()
+        {
+            using (var context = CreateContext())
+            {
+                var user = new User
+                {
+                    Id = Guid.Parse("9063bb54f4444eeeb719ae2e4d9edfd0"),
+                    ClientId = Guid.Parse("b5948857f8b44a529a375cff56788797")
+                };
+
+                var campaigns = await context.Campaigns.ToListAsync();
+
+                foreach (var campaign in campaigns)
+                {
+                    user.AddAccessTo(campaign);
+                }
+
+                context.Users.Add(user);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        static async Task OutputClientsForUser()
+        {
+            using (var context = CreateContext())
+            {
+                var campaignsForUser = await context
+                    .Users
+                    .WithId(Guid.Parse("9063bb54f4444eeeb719ae2e4d9edfd0"))
+                    .GetAccessibleClients()
+                    .Select(o => o.Name)
+                    .Distinct()
+                    .ToListAsync();
+
+                Console.WriteLine("CAMPAIGNS FOR USER:");
+                Console.WriteLine("***********");
+
+                foreach (var campaign in campaignsForUser)
+                    Console.WriteLine("{0}", campaign);
 
                 Console.WriteLine();
             }

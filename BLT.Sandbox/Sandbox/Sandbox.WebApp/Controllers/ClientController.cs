@@ -21,9 +21,11 @@ namespace Sandbox.WebApp.Controllers
         // GET: /Clients/
         public async Task<ActionResult> Index()
         {
-            var clients = await db.Users.Where(o => o.Id == userId)
-                .SelectMany(o => o.AccessibleCampaigns)
-                .Select(o => o.Client)
+            var clients = await db.Users
+                .WithId(userId)
+                .GetAccessibleClients()
+                //.SelectMany(o => o.AccessibleCampaigns)
+                //.Select(o => o.Campaign.Client)
                 .ToListAsync();
 
             return View(clients);

@@ -39,6 +39,7 @@
     <Compile Include="EntityBase.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Extensions\DataObjectExtensions.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Content.cs" />
     <Compile Include="Campaign.cs" />

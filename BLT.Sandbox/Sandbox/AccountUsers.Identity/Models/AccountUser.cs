@@ -15,6 +15,6 @@ namespace AccountUsers.Identity.Models
         public string DisplayName { get; set; }
 
         public Guid ClientId { get; set; }
-        public virtual Organization Client { get; set; }
+        public virtual Client Client { get; set; }
     }
 }

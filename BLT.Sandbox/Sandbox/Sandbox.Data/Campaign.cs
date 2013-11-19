@@ -13,9 +13,9 @@ namespace Sandbox.Data
 
         // foreign key + relationships
         public Guid ClientId { get; set; }
-        //public Guid? LatestProjectId { get; set; }
+        public Guid? LatestProjectId { get; set; }
         public virtual Client Client { get; set; }
-        //public virtual Project LatestProject { get; set; }
+        public virtual Project LatestProject { get; set; }
 
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<UserCampaignPermission> UsersWithAccess { get; set; }

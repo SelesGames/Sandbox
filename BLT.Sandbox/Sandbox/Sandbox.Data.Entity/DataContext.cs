@@ -58,15 +58,11 @@ namespace Sandbox.Data.Entity
             modelBuilder.Entity<Project>().HasRequired(o => o.Client).WithMany(o => (ICollection<Project>)o.Projects).HasForeignKey(o => o.ClientId).WillCascadeOnDelete(false);
             modelBuilder.Entity<UserCampaignPermission>().HasRequired(o => o.User).WithMany(o => o.AccessibleCampaigns).HasForeignKey(o => o.UserId).WillCascadeOnDelete(false);
             //modelBuilder.Entity<UserCampaignPermission>().HasRequired(o => o.Campaign).WithMany(o => o.UsersWithAccess).HasForeignKey(o => o.CampaignId).WillCascadeOnDelete(false);
-
-            //// Specify OPTIONAL foreign key mappings
-            modelBuilder.Entity<Client>().HasOptional(o => o.LatestProject).WithOptionalDependent();//.Map(o => o.MapKey("LatestProjectId"));
-            modelBuilder.Entity<Campaign>().HasOptional(o => o.LatestProject).WithOptionalDependent();//.Map(o => o.MapKey("LatestProjectId"));
             
-            //modelBuilder.Entity<Client>().Property.Map(o => o.Property(a => a.LatestProjectId, "LatestProjectId")
-            modelBuilder.Entity<Client>().Property(o => o.LatestProjectId).HasColumnName("LatestProjectId");
-            modelBuilder.Entity<Campaign>().Property(o => o.LatestProjectId).HasColumnName("LatestProjectId");
-           
+            // Specify OPTIONAL foreign key mappings
+            modelBuilder.Entity<Client>().HasOptional(o => o.LatestProject).WithMany().HasForeignKey(o => o.LatestProjectId);
+            modelBuilder.Entity<Campaign>().HasOptional(o => o.LatestProject).WithMany().HasForeignKey(o => o.LatestProjectId);
+
             base.OnModelCreating(modelBuilder);
         }
 

@@ -12,11 +12,11 @@ using Sandbox.Data.Entity;
 
 namespace Sandbox.WebApp.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ClientController : Controller
     {
         DataContext db = new DataContext();
-        Guid userId;
+        Guid userId = Guid.Parse("9063bb54f4444eeeb719ae2e4d9edfd0");
 
         // GET: /Clients/
         public async Task<ActionResult> Index()
@@ -24,6 +24,8 @@ namespace Sandbox.WebApp.Controllers
             var clients = await db.Users
                 .WithId(userId)
                 .GetAccessibleClients()
+                .OrderBy(o => o.Name)
+                .Distinct()
                 //.SelectMany(o => o.AccessibleCampaigns)
                 //.Select(o => o.Campaign.Client)
                 .ToListAsync();
@@ -40,8 +42,8 @@ namespace Sandbox.WebApp.Controllers
             }
 
             var client = await db.Clients
-                .Include(o => o.Campaigns)
                 .Where(o => o.Id == id)
+                .Include(o => o.Campaigns)
                 .SingleOrDefaultAsync();
 
             if (client == null)

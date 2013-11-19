@@ -106,9 +106,9 @@
                 @Html.DisplayFor(modelItem => item.LatestProjectId)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Edit", "Edit", "Campaign", new { id = item.Id }, null) |
+                @Html.ActionLink("Details", "Details", "Campaign", new { id = item.Id }, null) |
+                @Html.ActionLink("Delete", "Delete", "Campaign", new { id = item.Id }, null)
             </td>
         </tr>
     }

@@ -56,39 +56,39 @@ namespace Sandbox
                 context.Database.Delete();
             }
 
-            await CreateClients();
-            await OutputClients();
-            await AddCampaignsToClients();
+            await CreateGroups();
+            await OutputGroups();
+            await AddCampaignsToGroups();
             await OutputCampaigns();
             await AddProjectsToCampaigns();
             await OutputProjects();
 
             await CreateUser();
-            await OutputClientsForUser();
+            await OutputGroupsForUser();
 
-            //await DeleteClient();
+            //await DeleteGroup();
 
-            //await OutputClients();
+            //await OutputGroups();
             //await OutputCampaigns();
             //await OutputProjects();
         }
 
-        static async Task CreateClients()
+        static async Task CreateGroups()
         {
             using (var context = CreateContext())
             {
-                context.Clients.AddRange(new[] {
-                    new Client
+                context.Groups.AddRange(new[] {
+                    new Group
                     {
                         Id = Guid.Parse("1d5067434147480ab826efb7e11939a8"),
                         Name = "CBS",
                     },
-                    new Client
+                    new Group
                     {
                         Id = Guid.Parse("b5948857f8b44a529a375cff56788797"),
                         Name = "Marvel",
                     },
-                    new Client
+                    new Group
                     {
                         Id = Guid.Parse("d3a8298754cb462fbc0096285cca2623"),
                         Name = "20th Century Fox",
@@ -99,46 +99,46 @@ namespace Sandbox
             }
         }
 
-        static async Task OutputClients()
+        static async Task OutputGroups()
         {
             using (var context = CreateContext())
             {
-                Console.WriteLine("CLIENTS:");
+                Console.WriteLine("GroupS:");
                 Console.WriteLine("***********");
 
-                var clients = await context.Clients.ToListAsync();
+                var Groups = await context.Groups.ToListAsync();
 
-                foreach (var client in clients.Select(o => o.Name))
-                    Console.WriteLine(client);
+                foreach (var Group in Groups.Select(o => o.Name))
+                    Console.WriteLine(Group);
 
                 Console.WriteLine();
             }
         }
 
-        static async Task AddCampaignsToClients()
+        static async Task AddCampaignsToGroups()
         {
             using (var context = CreateContext())
             {
-                var marvel = await context.Clients.SingleAsync(o => o.Name.Equals("marvel", StringComparison.OrdinalIgnoreCase));
+                var marvel = await context.Groups.SingleAsync(o => o.Name.Equals("marvel", StringComparison.OrdinalIgnoreCase));
 
                 context.Campaigns.AddRange(new[]
                 {
                     new Campaign
                     {
                         Id = Guid.Parse("e17ee3df2a19402784e4568edcfab8e3"),
-                        Client = marvel,
+                        Group = marvel,
                         Name = "Silver Surfer movie",
                     },
                     new Campaign
                     {
                         Id = Guid.Parse("5d893561243149a08b12d33b13334d7e"),
-                        Client = marvel,
+                        Group = marvel,
                         Name = "Avengers 3",
                     },
                     new Campaign
                     {
                         Id = Guid.Parse("208c26eb8fdd44779647445b5e0c0611"),
-                        Client = marvel,
+                        Group = marvel,
                         Name = "Dr. Strange movie",
                     },
                 });
@@ -148,24 +148,24 @@ namespace Sandbox
 
             using (var context = CreateContext())
             {
-                var cbs = await context.Clients.SingleAsync(o => o.Name.Equals("cbs", StringComparison.OrdinalIgnoreCase));
+                var cbs = await context.Groups.SingleAsync(o => o.Name.Equals("cbs", StringComparison.OrdinalIgnoreCase));
 
                 cbs.Campaigns.Add(
                     new Campaign
                     {
                         Id = Guid.Parse("601c080013bf45919abdab3a29c3ec1b"),
-                        Client = cbs,
+                        Group = cbs,
                         Name = "How I Met Your Mother",
                     });
 
                 await context.SaveChangesAsync();
             }
 
-            Client fox;
+            Group fox;
 
             using (var context = CreateContext())
             {
-                fox = await context.Clients.SingleAsync(o => o.Name.Contains("fox"));
+                fox = await context.Groups.SingleAsync(o => o.Name.Contains("fox"));
 
                 fox.Add(
                     new Campaign
@@ -183,7 +183,7 @@ namespace Sandbox
                     new Campaign
                     {
                         Id = Guid.Parse("a9f7bd5b4599483194ccaf5ba50a163d"),
-                        ClientId = fox.Id,
+                        GroupId = fox.Id,
                         Name = "Family Guy",
                     });
 
@@ -197,9 +197,9 @@ namespace Sandbox
             {
                 var campaigns = await context
                     .Campaigns
-                    .Include(o => o.Client)  // tells the query to *eager* load Client
-                    .Select(o => new { ClientName = o.Client.Name, CampaignName = o.Name })
-                    .OrderBy(o => o.ClientName)
+                    .Include(o => o.Group)  // tells the query to *eager* load Group
+                    .Select(o => new { GroupName = o.Group.Name, CampaignName = o.Name })
+                    .OrderBy(o => o.GroupName)
                     .ThenBy(o => o.CampaignName)
                     .ToListAsync();
 
@@ -207,7 +207,7 @@ namespace Sandbox
                 Console.WriteLine("***********");
 
                 foreach (var campaign in campaigns)
-                    Console.WriteLine("{0} - {1}", campaign.ClientName, campaign.CampaignName);
+                    Console.WriteLine("{0} - {1}", campaign.GroupName, campaign.CampaignName);
 
                 Console.WriteLine();
             }
@@ -264,10 +264,10 @@ namespace Sandbox
             {
                 var projects = await context
                     .Projects
-                    .Include(o => o.Client)  // tells the query to *eager* load Client
+                    .Include(o => o.Group)  // tells the query to *eager* load Group
                     .Include(o => o.Campaign)
-                    .Select(o => new { ClientName = o.Client.Name, CampaignName = o.Campaign.Name, ProjectName = o.Name })
-                    .OrderBy(o => o.ClientName)
+                    .Select(o => new { GroupName = o.Group.Name, CampaignName = o.Campaign.Name, ProjectName = o.Name })
+                    .OrderBy(o => o.GroupName)
                     .ThenBy(o => o.CampaignName)
                     .ThenBy(o => o.ProjectName)
                     .ToListAsync();
@@ -276,21 +276,21 @@ namespace Sandbox
                 Console.WriteLine("***********");
 
                 foreach (var o in projects)
-                    Console.WriteLine("{0} - {1} - {2}", o.ClientName, o.CampaignName, o.ProjectName);
+                    Console.WriteLine("{0} - {1} - {2}", o.GroupName, o.CampaignName, o.ProjectName);
 
                 Console.WriteLine();
             }
         }
 
-        static async Task DeleteClient()
+        static async Task DeleteGroup()
         {
             using (var context = CreateContext())
             {
-                var marvel = await context.Clients.SingleAsync(o => o.Name.Contains("marvel"));
+                var marvel = await context.Groups.SingleAsync(o => o.Name.Contains("marvel"));
 
                 Console.WriteLine("******** DELETING MARVEL ********");
 
-                context.Clients.Remove(marvel);
+                context.Groups.Remove(marvel);
                 await context.SaveChangesAsync();
 
                 Console.WriteLine();
@@ -304,14 +304,14 @@ namespace Sandbox
                 var user = new User
                 {
                     Id = Guid.Parse("9063bb54f4444eeeb719ae2e4d9edfd0"),
-                    ClientId = Guid.Parse("b5948857f8b44a529a375cff56788797")
+                    GroupId = Guid.Parse("b5948857f8b44a529a375cff56788797")
                 };
 
-                var campaigns = await context.Campaigns.ToListAsync();
+                var projects = await context.Projects.ToListAsync();
 
-                foreach (var campaign in campaigns)
+                foreach (var project in projects)
                 {
-                    user.AddAccessTo(campaign);
+                    user.AddAccessTo(project);
                 }
 
                 context.Users.Add(user);
@@ -319,23 +319,23 @@ namespace Sandbox
             }
         }
 
-        static async Task OutputClientsForUser()
+        static async Task OutputGroupsForUser()
         {
             using (var context = CreateContext())
             {
-                var campaignsForUser = await context
+                var groupsForUser = await context
                     .Users
                     .WithId(Guid.Parse("9063bb54f4444eeeb719ae2e4d9edfd0"))
-                    .GetAccessibleClients()
+                    .GetAccessibleGroups()
                     .Select(o => o.Name)
                     .Distinct()
                     .ToListAsync();
 
-                Console.WriteLine("CAMPAIGNS FOR USER:");
+                Console.WriteLine("GROUPS FOR USER:");
                 Console.WriteLine("***********");
 
-                foreach (var campaign in campaignsForUser)
-                    Console.WriteLine("{0}", campaign);
+                foreach (var group in groupsForUser)
+                    Console.WriteLine("{0}", group);
 
                 Console.WriteLine();
             }

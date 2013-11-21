@@ -36,7 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CampaignLinkedOrganization.cs" />
-    <Compile Include="Client.cs" />
+    <Compile Include="Group.cs" />
     <Compile Include="EntityBase.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -8,7 +8,7 @@ namespace Sandbox.Data
     {
         public RoundState State { get; set; } // Draft, InReview, Published, Archived
         public DateTime CreatedOn { get; set; }
-        public string RoundId { get; set; } // maybe call round label
+        public string RoundNumber { get; set; } // maybe call round label
 
         // properties updated via triggers (whenever projects are added/edited/removed)
         public int ContentCount { get; set; }
@@ -42,9 +42,9 @@ namespace Sandbox.Data
             Contents.Remove(content);
         }
 
-        public void AddApproval(User user)
+        public void AddApproval(User user, bool gaveApproval)
         {
-            var approval = new RoundApproval { Round = this, User = user };
+            var approval = new RoundApproval { Round = this, User = user, GaveApproval = gaveApproval };
             Approvals.Add(approval);
         }
 
@@ -66,13 +66,5 @@ namespace Sandbox.Data
         }
 
         #endregion
-    }
-
-    public enum RoundState
-    {
-        Draft,
-        InReview,
-        Published,
-        Archived
     }
 }

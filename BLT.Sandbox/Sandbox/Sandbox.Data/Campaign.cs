@@ -6,6 +6,7 @@ namespace Sandbox.Data
 {
     public class Campaign : EntityBase
     {
+        public State State { get; set; }
         public string Name { get; set; }
         public string ImageUrl { get; set; }
 
@@ -15,9 +16,9 @@ namespace Sandbox.Data
         public string LatestProjectName { get; set; }
 
         // foreign key + relationships
-        public Guid ClientId { get; set; }
+        public Guid GroupId { get; set; }
         public Guid? LatestProjectId { get; set; }
-        public virtual Client Client { get; set; }
+        public virtual Group Group { get; set; }
         public virtual Project LatestProject { get; set; }
 
         public virtual ICollection<Project> Projects { get; set; }
@@ -34,7 +35,7 @@ namespace Sandbox.Data
 
         public void Add(Project project)
         {
-            project.Client = Client;
+            project.Group = Group;
             project.Campaign = this;
             Projects.Add(project);
         }

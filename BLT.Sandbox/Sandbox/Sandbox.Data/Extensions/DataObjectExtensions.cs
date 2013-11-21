@@ -17,12 +17,12 @@ namespace Sandbox.Data
             return WithId(entities, Guid.Parse(id));
         }
 
-        public static IQueryable<Client> GetAccessibleClients(this IQueryable<User> users)
+        public static IQueryable<Group> GetAccessibleGroups(this IQueryable<User> users)
         {
             return users
                 .SelectMany(o => o.AccessibleCampaigns)
                 .Select(o => o.Campaign)
-                .Select(o => o.Client);
+                .Select(o => o.Group);
         }
     }
 }

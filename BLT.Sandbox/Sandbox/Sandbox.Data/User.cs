@@ -6,8 +6,11 @@ namespace Sandbox.Data
 {
     public class User : EntityBase
     {
-        public Guid ClientId { get; set; }
-        public virtual Client Client { get; set; }
+        public State State { get; set; }
+
+        // foreign key + relationships
+        public Guid GroupId { get; set; }
+        public virtual Group Group { get; set; }
 
         public virtual ICollection<UserProjectPermission> AccessibleProjects { get; set; }
 

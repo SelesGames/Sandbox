@@ -3,10 +3,9 @@ using System.Collections.Generic;
 
 namespace Sandbox.Data
 {
-    public class Client : EntityBase
+    public class Group : EntityBase
     {
-        public string State // Hidden, Archived, Active
-
+        public State State { get; set; }
         public string Name { get; set; }
         public string LogoUrl { get; set; }
 
@@ -23,7 +22,7 @@ namespace Sandbox.Data
         public virtual IReadOnlyCollection<Project> Projects { get; set; }
         public virtual ICollection<User> Users { get; set; }
 
-        public Client()
+        public Group()
         {
             Campaigns = new List<Campaign>();
             Projects = new List<Project>();
@@ -37,7 +36,7 @@ namespace Sandbox.Data
 
         public void Add(Campaign campaign)
         {
-            campaign.Client = this;
+            campaign.Group = this;
             Campaigns.Add(campaign);
         }
 
@@ -48,7 +47,7 @@ namespace Sandbox.Data
 
         public void Add(User user)
         {
-            user.Client = this;
+            user.Group = this;
             Users.Add(user);
         }
 

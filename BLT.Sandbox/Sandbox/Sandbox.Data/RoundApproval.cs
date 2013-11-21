@@ -4,7 +4,9 @@ namespace Sandbox.Data
 {
     public class RoundApproval
     {
-        public int Id { get; set; }
+        // identity primary key
+        public int Id { get; protected set; }
+
         public bool GaveApproval { get; set; }
 
         // foreign key + relationships

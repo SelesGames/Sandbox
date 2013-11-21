@@ -6,6 +6,7 @@ namespace Sandbox.Data
 {
     public class Project : EntityBase
     {
+        public State State { get; set; }
         public string Name { get; set; }
         public string ImageUrl { get; set; }
 
@@ -13,9 +14,9 @@ namespace Sandbox.Data
         public DateTime? LatestRoundModified { get; set; }
 
         // foreign key + relationships
-        public Guid ClientId { get; set; }
+        public Guid GroupId { get; set; }
         public Guid CampaignId { get; set; }
-        public virtual Client Client { get; set; }
+        public virtual Group Group { get; set; }
         public virtual Campaign Campaign { get; set; }
 
         public virtual ICollection<Round> Rounds { get; set; }

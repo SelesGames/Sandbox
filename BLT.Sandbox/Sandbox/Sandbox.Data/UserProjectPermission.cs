@@ -4,7 +4,9 @@ namespace Sandbox.Data
 {
     public class UserProjectPermission
     {
-        public int Id { get; set; }
+        // identity primary key
+        public int Id { get; protected set; }
+
         public UserProjectRole Role; // Approver, Normal
 
         // foreign key + relationships

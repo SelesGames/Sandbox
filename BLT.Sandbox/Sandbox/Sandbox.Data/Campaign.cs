@@ -7,6 +7,9 @@ namespace Sandbox.Data
     public class Campaign : EntityBase
     {
         public string Name { get; set; }
+        public string ImageUrl { get; set; }
+
+        // properties updated via triggers (whenever projects are added/edited/removed)
         public int ProjectCount { get; set; }
         public DateTime? LatestProjectTime { get; set; }
         public string LatestProjectName { get; set; }
@@ -18,12 +21,10 @@ namespace Sandbox.Data
         public virtual Project LatestProject { get; set; }
 
         public virtual ICollection<Project> Projects { get; set; }
-        public virtual ICollection<UserCampaignPermission> UsersWithAccess { get; set; }
 
         public Campaign()
         {
             Projects = new List<Project>();
-            UsersWithAccess = new List<UserCampaignPermission>();
         }
 
 
@@ -41,29 +42,6 @@ namespace Sandbox.Data
         public void Remove(Project project)
         {
             Projects.Remove(project);
-        }
-
-        public void AddAccessFor(User user)
-        {
-            var permission = new UserCampaignPermission { User = user, Campaign = this };
-            UsersWithAccess.Add(permission);
-        }
-
-        public void RemoveAccessFor(User user)
-        {
-            var permission = UsersWithAccess.FirstOrDefault(o => o.User.Equals(user));
-            UsersWithAccess.Remove(permission);
-        }
-
-        public void AddAccessFor(UserCampaignPermission permission)
-        {
-            permission.Campaign = this;
-            UsersWithAccess.Add(permission);
-        }
-
-        public void RemoveAccessFor(UserCampaignPermission permission)
-        {
-            UsersWithAccess.Remove(permission);
         }
 
         #endregion

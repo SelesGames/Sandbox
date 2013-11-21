@@ -9,11 +9,11 @@ namespace Sandbox.Data
         public Guid ClientId { get; set; }
         public virtual Client Client { get; set; }
 
-        public virtual ICollection<UserCampaignPermission> AccessibleCampaigns { get; set; }
+        public virtual ICollection<UserProjectPermission> AccessibleProjects { get; set; }
 
         public User()
         {
-            AccessibleCampaigns = new List<UserCampaignPermission>();
+            AccessibleProjects = new List<UserProjectPermission>();
         }
 
 
@@ -21,27 +21,27 @@ namespace Sandbox.Data
 
         #region Add/Remove methods
 
-        public void AddAccessTo(Campaign campaign)
+        public void AddAccessTo(Project project)
         {
-            var permission = new UserCampaignPermission { User = this, Campaign = campaign };
-            AccessibleCampaigns.Add(permission);
+            var permission = new UserProjectPermission { UserId = this.Id, Project = project };
+            AccessibleProjects.Add(permission);
         }
 
-        public void RemoveAccessTo(Campaign campaign)
+        public void RemoveAccessTo(Project project)
         {
-            var permission = AccessibleCampaigns.FirstOrDefault(o => o.Campaign.Equals(campaign));
-            AccessibleCampaigns.Remove(permission);
+            var permission = AccessibleProjects.FirstOrDefault(o => o.Project.Equals(project));
+            AccessibleProjects.Remove(permission);
         }
 
-        public void AddAccessTo(UserCampaignPermission permission)
+        public void AddAccessTo(UserProjectPermission permission)
         {
-            permission.User = this;
-            AccessibleCampaigns.Add(permission);
+            permission.UserId = this.Id;
+            AccessibleProjects.Add(permission);
         }
 
-        public void RemoveAccessTo(UserCampaignPermission permission)
+        public void RemoveAccessTo(UserProjectPermission permission)
         {
-            AccessibleCampaigns.Remove(permission);
+            AccessibleProjects.Remove(permission);
         }
 
         #endregion

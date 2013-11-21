@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sandbox.Data
 {
     public class Project : EntityBase
     {
         public string Name { get; set; }
-        public string CoverImageUrl { get; set; }
+        public string ImageUrl { get; set; }
+
+        // properties updated via triggers (whenever projects are added/edited/removed)
         public DateTime? LatestRoundModified { get; set; }
 
         // foreign key + relationships
@@ -16,10 +19,12 @@ namespace Sandbox.Data
         public virtual Campaign Campaign { get; set; }
 
         public virtual ICollection<Round> Rounds { get; set; }
+        public virtual ICollection<UserProjectPermission> UsersWithAccess { get; set; }
 
         public Project()
         {
             Rounds = new List<Round>();
+            UsersWithAccess = new List<UserProjectPermission>();
         }
 
 
@@ -36,6 +41,29 @@ namespace Sandbox.Data
         public void Remove(Round round)
         {
             Rounds.Remove(round);
+        }
+
+        public void AddAccessFor(User user)
+        {
+            var permission = new UserProjectPermission { User = user, Project = this };
+            UsersWithAccess.Add(permission);
+        }
+
+        public void RemoveAccessFor(User user)
+        {
+            var permission = UsersWithAccess.FirstOrDefault(o => o.User.Equals(user));
+            UsersWithAccess.Remove(permission);
+        }
+
+        public void AddAccessFor(UserProjectPermission permission)
+        {
+            permission.Project = this;
+            UsersWithAccess.Add(permission);
+        }
+
+        public void RemoveAccessFor(UserProjectPermission permission)
+        {
+            UsersWithAccess.Remove(permission);
         }
 
         #endregion

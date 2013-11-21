@@ -35,6 +35,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CampaignLinkedOrganization.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="EntityBase.cs">
       <SubType>Code</SubType>
@@ -45,8 +46,11 @@
     <Compile Include="Campaign.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Round.cs" />
+    <Compile Include="RoundApproval.cs" />
     <Compile Include="User.cs" />
-    <Compile Include="UserCampaignPermission.cs" />
+    <Compile Include="UserProjectPermission.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

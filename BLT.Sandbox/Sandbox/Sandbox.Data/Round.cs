@@ -1,22 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sandbox.Data
 {
     public class Round : EntityBase
     {
-        public int FileCount { get; set; }
+        public RoundState State { get; set; } // Draft, InReview, Published, Archived
         public DateTime CreatedOn { get; set; }
+        public string RoundId { get; set; } // maybe call round label
+
+        // properties updated via triggers (whenever projects are added/edited/removed)
+        public int ContentCount { get; set; }
 
         // foreign key + relationships
         public Guid ProjectId { get; set; }
         public virtual Project Project { get; set; }
 
         public virtual ICollection<Content> Contents { get; set; }
+        public virtual ICollection<RoundApproval> Approvals { get; set; }
 
         public Round()
         {
             Contents = new List<Content>();
+            Approvals = new List<RoundApproval>();
         }
 
 
@@ -35,6 +42,37 @@ namespace Sandbox.Data
             Contents.Remove(content);
         }
 
+        public void AddApproval(User user)
+        {
+            var approval = new RoundApproval { Round = this, User = user };
+            Approvals.Add(approval);
+        }
+
+        public void RemoveApproval(User user)
+        {
+            var approval = Approvals.FirstOrDefault(o => o.User.Equals(user));
+            Approvals.Remove(approval);
+        }
+
+        public void AddApproval(RoundApproval approval)
+        {
+            approval.Round = this;
+            Approvals.Add(approval);
+        }
+
+        public void RemoveApproval(RoundApproval approval)
+        {
+            Approvals.Remove(approval);
+        }
+
         #endregion
+    }
+
+    public enum RoundState
+    {
+        Draft,
+        InReview,
+        Published,
+        Archived
     }
 }

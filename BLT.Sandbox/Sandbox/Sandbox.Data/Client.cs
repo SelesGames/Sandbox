@@ -5,8 +5,12 @@ namespace Sandbox.Data
 {
     public class Client : EntityBase
     {
+        public string State // Hidden, Archived, Active
+
         public string Name { get; set; }
         public string LogoUrl { get; set; }
+
+        // properties updated via triggers (whenever projects are added/edited/removed)
         public int ProjectCount { get; set; }
         public DateTime? LatestProjectTime { get; set; }
         public string LatestProjectName { get; set; }

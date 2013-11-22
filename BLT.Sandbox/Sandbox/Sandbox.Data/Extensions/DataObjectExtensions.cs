@@ -20,7 +20,8 @@ namespace Sandbox.Data
         public static IQueryable<Group> GetAccessibleGroups(this IQueryable<User> users)
         {
             return users
-                .SelectMany(o => o.AccessibleCampaigns)
+                .SelectMany(o => o.AccessibleProjects)
+                .Select(o => o.Project)
                 .Select(o => o.Campaign)
                 .Select(o => o.Group);
         }

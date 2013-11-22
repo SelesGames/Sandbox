@@ -59,12 +59,12 @@
     <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Client.sql" />
+    <Build Include="Group.sql" />
     <Build Include="Campaign.sql" />
     <Build Include="Project.sql" />
     <Build Include="Content.sql" />
     <Build Include="User.sql" />
-    <Build Include="UserCampaignPermission.sql" />
+    <Build Include="UserProjectPermission.sql" />
     <Build Include="Round.sql" />
   </ItemGroup>
   <ItemGroup>

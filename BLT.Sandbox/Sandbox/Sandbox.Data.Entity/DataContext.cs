@@ -56,8 +56,7 @@ namespace Sandbox.Data.Entity
 
             // Turn off Cascade-on-Delete
             modelBuilder.Entity<Project>().HasRequired(o => o.Group).WithMany(o => (ICollection<Project>)o.Projects).HasForeignKey(o => o.GroupId).WillCascadeOnDelete(false);
-            //modelBuilder.Entity<UserCampaignPermission>().HasRequired(o => o.User).WithMany(o => o.AccessibleCampaigns).HasForeignKey(o => o.UserId).WillCascadeOnDelete(false);
-            //modelBuilder.Entity<UserCampaignPermission>().HasRequired(o => o.Campaign).WithMany(o => o.UsersWithAccess).HasForeignKey(o => o.CampaignId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<User>().HasRequired(o => o.Group).WithMany(o => o.Users).HasForeignKey(o => o.GroupId).WillCascadeOnDelete(false);
             
             // Specify OPTIONAL foreign key mappings
             modelBuilder.Entity<Group>().HasOptional(o => o.LatestProject).WithMany().HasForeignKey(o => o.LatestProjectId);

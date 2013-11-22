@@ -108,3 +108,6 @@ Backup*/
 UpgradeLog*.XML
 *.ldf
 *.mdf
+
+/BLT.Sandbox/Sandbox/Sandbox.WebApp/App_Data/*.mdf
+/BLT.Sandbox/Sandbox/Sandbox.WebApp/App_Data/*.ldf

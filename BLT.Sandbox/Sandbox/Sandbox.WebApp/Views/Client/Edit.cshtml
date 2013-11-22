@@ -1,4 +1,4 @@
-﻿@model Sandbox.Data.Client
+﻿@model Sandbox.Data.Group
 
 @{
     ViewBag.Title = "Edit";
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Client</h4>
+        <h4>Group</h4>
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.Id)

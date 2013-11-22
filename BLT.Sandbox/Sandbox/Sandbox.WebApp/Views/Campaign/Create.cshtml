@@ -50,10 +50,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ClientId, "ClientId", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.GroupId, "GroupId", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ClientId", String.Empty)
-                @Html.ValidationMessageFor(model => model.ClientId)
+                @Html.DropDownList("GroupId", String.Empty)
+                @Html.ValidationMessageFor(model => model.GroupId)
             </div>
         </div>
 

@@ -220,11 +220,11 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Client\Create.cshtml" />
-    <Content Include="Views\Client\Delete.cshtml" />
-    <Content Include="Views\Client\Details.cshtml" />
-    <Content Include="Views\Client\Edit.cshtml" />
-    <Content Include="Views\Client\Index.cshtml" />
+    <Content Include="Views\Group\Create.cshtml" />
+    <Content Include="Views\Group\Delete.cshtml" />
+    <Content Include="Views\Group\Details.cshtml" />
+    <Content Include="Views\Group\Edit.cshtml" />
+    <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Campaign\Create.cshtml" />
     <Content Include="Views\Campaign\Delete.cshtml" />
     <Content Include="Views\Campaign\Details.cshtml" />

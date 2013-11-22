@@ -13,27 +13,27 @@ using Sandbox.Data.Entity;
 namespace Sandbox.WebApp.Controllers
 {
     //[Authorize]
-    public class ClientController : Controller
+    public class GroupController : Controller
     {
         DataContext db = new DataContext();
         Guid userId = Guid.Parse("9063bb54f4444eeeb719ae2e4d9edfd0");
 
-        // GET: /Clients/
+        // GET: /Groups/
         public async Task<ActionResult> Index()
         {
-            var clients = await db.Users
+            var Groups = await db.Users
                 .WithId(userId)
-                .GetAccessibleClients()
+                .GetAccessibleGroups()
                 .OrderBy(o => o.Name)
                 .Distinct()
                 //.SelectMany(o => o.AccessibleCampaigns)
-                //.Select(o => o.Campaign.Client)
+                //.Select(o => o.Campaign.Group)
                 .ToListAsync();
 
-            return View(clients);
+            return View(Groups);
         }
 
-        // GET: /Clients/Details/5
+        // GET: /Groups/Details/5
         public async Task<ActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -41,95 +41,95 @@ namespace Sandbox.WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var client = await db.Clients
+            var Group = await db.Groups
                 .Where(o => o.Id == id)
                 .Include(o => o.Campaigns)
                 .SingleOrDefaultAsync();
 
-            if (client == null)
+            if (Group == null)
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return View(Group);
         }
 
-        // GET: /Clients/Create
+        // GET: /Groups/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: /Clients/Create
+        // POST: /Groups/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,Name,LogoUrl,ProjectCount,LatestProjectTime,LatestProjectName,LatestProjectId")] Client client)
+        public async Task<ActionResult> Create([Bind(Include="Id,Name,LogoUrl,ProjectCount,LatestProjectTime,LatestProjectName,LatestProjectId")] Group Group)
         {
             if (ModelState.IsValid)
             {
-                client.Id = Guid.NewGuid();
-                db.Clients.Add(client);
+                Group.Id = Guid.NewGuid();
+                db.Groups.Add(Group);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(client);
+            return View(Group);
         }
 
-        // GET: /Clients/Edit/5
+        // GET: /Groups/Edit/5
         public async Task<ActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = await db.Clients.FindAsync(id);
-            if (client == null)
+            Group Group = await db.Groups.FindAsync(id);
+            if (Group == null)
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return View(Group);
         }
 
-        // POST: /Clients/Edit/5
+        // POST: /Groups/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,Name,LogoUrl,ProjectCount,LatestProjectTime,LatestProjectName,LatestProjectId")] Client client)
+        public async Task<ActionResult> Edit([Bind(Include="Id,Name,LogoUrl,ProjectCount,LatestProjectTime,LatestProjectName,LatestProjectId")] Group Group)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(client).State = EntityState.Modified;
+                db.Entry(Group).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(client);
+            return View(Group);
         }
 
-        // GET: /Clients/Delete/5
+        // GET: /Groups/Delete/5
         public async Task<ActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = await db.Clients.FindAsync(id);
-            if (client == null)
+            Group Group = await db.Groups.FindAsync(id);
+            if (Group == null)
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return View(Group);
         }
 
-        // POST: /Clients/Delete/5
+        // POST: /Groups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(Guid id)
         {
-            Client client = await db.Clients.FindAsync(id);
-            db.Clients.Remove(client);
+            Group Group = await db.Groups.FindAsync(id);
+            db.Groups.Remove(Group);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

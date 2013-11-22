@@ -19,7 +19,7 @@ namespace Sandbox.Controllers.Campaigns
         // GET: /Campaigns/
         public async Task<ActionResult> Index()
         {
-            var campaigns = db.Campaigns.Include(c => c.Client);
+            var campaigns = db.Campaigns.Include(c => c.Group);
             return View(await campaigns.ToListAsync());
         }
 
@@ -41,7 +41,7 @@ namespace Sandbox.Controllers.Campaigns
         // GET: /Campaigns/Create
         public ActionResult Create()
         {
-            ViewBag.ClientId = new SelectList(db.Clients, "Id", "Name");
+            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
             return View();
         }
 
@@ -50,7 +50,7 @@ namespace Sandbox.Controllers.Campaigns
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,Name,ProjectCount,LatestProjectTime,LatestProjectName,ClientId,LatestProjectId")] Campaign campaign)
+        public async Task<ActionResult> Create([Bind(Include="Id,Name,ProjectCount,LatestProjectTime,LatestProjectName,GroupId,LatestProjectId")] Campaign campaign)
         {
             if (ModelState.IsValid)
             {
@@ -60,7 +60,7 @@ namespace Sandbox.Controllers.Campaigns
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClientId = new SelectList(db.Clients, "Id", "Name", campaign.ClientId);
+            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", campaign.GroupId);
             return View(campaign);
         }
 
@@ -76,7 +76,7 @@ namespace Sandbox.Controllers.Campaigns
             {
                 return HttpNotFound();
             }
-            ViewBag.ClientId = new SelectList(db.Clients, "Id", "Name", campaign.ClientId);
+            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", campaign.GroupId);
             return View(campaign);
         }
 
@@ -85,7 +85,7 @@ namespace Sandbox.Controllers.Campaigns
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,Name,ProjectCount,LatestProjectTime,LatestProjectName,ClientId,LatestProjectId")] Campaign campaign)
+        public async Task<ActionResult> Edit([Bind(Include="Id,Name,ProjectCount,LatestProjectTime,LatestProjectName,GroupId,LatestProjectId")] Campaign campaign)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace Sandbox.Controllers.Campaigns
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.ClientId = new SelectList(db.Clients, "Id", "Name", campaign.ClientId);
+            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", campaign.GroupId);
             return View(campaign);
         }
 

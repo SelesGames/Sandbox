@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Client]
+﻿CREATE TABLE [dbo].[Group]
 (
     [SG_KEY] INT NOT NULL PRIMARY KEY CLUSTERED IDENTITY,
     [Id] UNIQUEIDENTIFIER NOT NULL,
@@ -10,4 +10,4 @@
 )
 
 GO
-CREATE UNIQUE INDEX [KeyIndex] ON [dbo].[Client] ([Id])
+CREATE UNIQUE INDEX [KeyIndex] ON [dbo].[Group] ([Id])

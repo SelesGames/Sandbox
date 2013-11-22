@@ -2,8 +2,8 @@
 (
     [SG_KEY] INT NOT NULL PRIMARY KEY NONCLUSTERED IDENTITY,
     [Id] UNIQUEIDENTIFIER NOT NULL,
-    [ClientId] UNIQUEIDENTIFIER NOT NULL,
-    --[ClientName] NVARCHAR(MAX) NOT NULL, only if we want to denormalize a bit
+    [GroupId] UNIQUEIDENTIFIER NOT NULL,
+    --[GroupName] NVARCHAR(MAX) NOT NULL, only if we want to denormalize a bit
     [Name] NVARCHAR(MAX) NOT NULL, 
     [ProjectCount] INT NOT NULL, 
     [LatestProjectId] UNIQUEIDENTIFIER, 
@@ -14,4 +14,4 @@
 GO
 CREATE UNIQUE INDEX [KeyIndex] ON [dbo].[Campaign] ([Id])
 GO
-CREATE CLUSTERED INDEX [ClusteredClientIndex] ON [dbo].[Campaign] ([ClientId],[SG_KEY])
+CREATE CLUSTERED INDEX [ClusteredGroupIndex] ON [dbo].[Campaign] ([GroupId],[SG_KEY])

@@ -42,7 +42,7 @@ namespace Sandbox.Data.Entity
 
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Client> Clients { get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Round> Rounds { get; set; }
@@ -55,12 +55,12 @@ namespace Sandbox.Data.Entity
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             // Turn off Cascade-on-Delete
-            modelBuilder.Entity<Project>().HasRequired(o => o.Client).WithMany(o => (ICollection<Project>)o.Projects).HasForeignKey(o => o.ClientId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Project>().HasRequired(o => o.Group).WithMany(o => (ICollection<Project>)o.Projects).HasForeignKey(o => o.GroupId).WillCascadeOnDelete(false);
             //modelBuilder.Entity<UserCampaignPermission>().HasRequired(o => o.User).WithMany(o => o.AccessibleCampaigns).HasForeignKey(o => o.UserId).WillCascadeOnDelete(false);
             //modelBuilder.Entity<UserCampaignPermission>().HasRequired(o => o.Campaign).WithMany(o => o.UsersWithAccess).HasForeignKey(o => o.CampaignId).WillCascadeOnDelete(false);
             
             // Specify OPTIONAL foreign key mappings
-            modelBuilder.Entity<Client>().HasOptional(o => o.LatestProject).WithMany().HasForeignKey(o => o.LatestProjectId);
+            modelBuilder.Entity<Group>().HasOptional(o => o.LatestProject).WithMany().HasForeignKey(o => o.LatestProjectId);
             modelBuilder.Entity<Campaign>().HasOptional(o => o.LatestProject).WithMany().HasForeignKey(o => o.LatestProjectId);
 
             base.OnModelCreating(modelBuilder);
@@ -87,10 +87,10 @@ namespace Sandbox.Data.Entity
         void ExplicitlyMapForeignKeys(DbModelBuilder modelBuilder)
         {
             // Campaign foreign key mappings
-            modelBuilder.Entity<Campaign>().HasRequired(o => o.Client).WithMany(o => o.Campaigns).HasForeignKey(o => o.ClientId);
+            modelBuilder.Entity<Campaign>().HasRequired(o => o.Group).WithMany(o => o.Campaigns).HasForeignKey(o => o.GroupId);
 
             // Project foreign key mappings
-            modelBuilder.Entity<Project>().HasRequired(o => o.Client).WithMany(o => (ICollection<Project>)o.Projects).HasForeignKey(o => o.ClientId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Project>().HasRequired(o => o.Group).WithMany(o => (ICollection<Project>)o.Projects).HasForeignKey(o => o.GroupId).WillCascadeOnDelete(false);
             modelBuilder.Entity<Project>().HasRequired(o => o.Campaign).WithMany(o => o.Projects).HasForeignKey(o => o.CampaignId);
 
             // Round foreign key mappings

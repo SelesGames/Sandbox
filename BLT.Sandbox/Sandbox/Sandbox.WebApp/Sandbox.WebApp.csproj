@@ -167,8 +167,12 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\CampaignController.cs" />
+    <Compile Include="ViewModels\BoxContainerVM.cs" />
+    <Compile Include="ViewModels\Campaign\IndexVM.cs" />
+    <Compile Include="ViewModels\Group\DetailsVM.cs" />
+    <Compile Include="ViewModels\Group\IndexVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\test_db.mdf" />
@@ -240,6 +244,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{defcb640-f763-40b8-ada9-b177382d6e97}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sandbox.Data.Entity\Sandbox.Data.Entity.csproj">
       <Project>{c91bffc7-37b2-4277-b69a-4c3ad800a663}</Project>
       <Name>Sandbox.Data.Entity</Name>

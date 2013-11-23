@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Sandbox.Data;
 using Sandbox.Data.Entity;
+using Sandbox.WebApp.ViewModels.Group;
 
 namespace Sandbox.WebApp.Controllers
 {
@@ -21,36 +22,27 @@ namespace Sandbox.WebApp.Controllers
         // GET: /Groups/
         public async Task<ActionResult> Index()
         {
-            var Groups = await db.Users
-                .WithId(userId)
-                .GetAccessibleGroups()
-                .OrderBy(o => o.Name)
-                .Distinct()
-                //.SelectMany(o => o.AccessibleCampaigns)
-                //.Select(o => o.Campaign.Group)
-                .ToListAsync();
-
-            return View(Groups);
+            var vm = new IndexVM(db);
+            await vm.Load();
+            return View(vm);
         }
 
         // GET: /Groups/Details/5
-        public async Task<ActionResult> Details(Guid? id)
+        public async Task<ActionResult> Details(string name)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(name))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var Group = await db.Groups
-                .Where(o => o.Id == id)
-                .Include(o => o.Campaigns)
-                .SingleOrDefaultAsync();
+            var vm = new DetailsVM(db, name);
+            await vm.Load();
+            return View(vm);
 
-            if (Group == null)
-            {
-                return HttpNotFound();
-            }
-            return View(Group);
+            //if (Group == null)
+            //{
+            //    return HttpNotFound();
+            //}
         }
 
         // GET: /Groups/Create

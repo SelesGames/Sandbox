@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Linq;
+using System.Data.Entity.Infrastructure;
 
 namespace Sandbox.WebApp.Controllers
 {
@@ -111,11 +112,30 @@ namespace Sandbox.WebApp.Controllers
             {
                 var dbGroup = await db.Groups.WithId(Group.Id).SingleOrDefaultAsync();
 
-                dbGroup.State = Group.State;
-                dbGroup.Name = Group.Name;
-                dbGroup.LogoUrl = dbGroup.LogoUrl;
+                // update via optimistic concurrency, database wins
+                // http://msdn.microsoft.com/en-us/data/jj592904.aspx
+                bool saveFailed;
+                do
+                {
+                    saveFailed = false;
 
-                await db.SaveChangesAsync();
+                    try
+                    {
+                        dbGroup.State = Group.State;
+                        dbGroup.Name = Group.Name;
+                        dbGroup.LogoUrl = dbGroup.LogoUrl;
+
+                        await db.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException ex)
+                    {
+                        saveFailed = true;
+
+                        // Update the values of the entity that failed to save from the store
+                        ex.Entries.Single().Reload();
+                    }
+
+                } while (saveFailed);
 
                 return RedirectToAction("Index");
             }

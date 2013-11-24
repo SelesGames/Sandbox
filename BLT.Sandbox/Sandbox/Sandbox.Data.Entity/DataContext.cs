@@ -62,6 +62,10 @@ namespace Sandbox.Data.Entity
             modelBuilder.Entity<Group>().HasOptional(o => o.LatestProject).WithMany().HasForeignKey(o => o.LatestProjectId);
             modelBuilder.Entity<Campaign>().HasOptional(o => o.LatestProject).WithMany().HasForeignKey(o => o.LatestProjectId);
 
+            // specify that the RowVersion property should be configured as a "rowversion" SQL DATA type
+            modelBuilder.Properties().Where(o => o.Name.Equals("RowVersion"))
+                .Configure(config => config.IsRowVersion());
+
             base.OnModelCreating(modelBuilder);
         }
 

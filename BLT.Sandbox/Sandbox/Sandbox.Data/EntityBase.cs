@@ -5,6 +5,7 @@ namespace Sandbox.Data
     public abstract class EntityBase
     {
         public Guid Id { get; set; }
+        public virtual byte[] RowVersion { get; set; }
 
 
 

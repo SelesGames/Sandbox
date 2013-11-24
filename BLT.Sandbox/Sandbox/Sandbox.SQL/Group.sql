@@ -6,7 +6,8 @@
     [ProjectCount] INT NOT NULL, 
     [LatestProjectId] UNIQUEIDENTIFIER, 
     [LatestProjectTime] DATETIME, 
-    [LatestProjectName] NVARCHAR(MAX)
+    [LatestProjectName] NVARCHAR(MAX),
+	[Version] rowversion
 )
 
 GO

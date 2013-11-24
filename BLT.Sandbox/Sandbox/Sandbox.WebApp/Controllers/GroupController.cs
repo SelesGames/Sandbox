@@ -1,49 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using Sandbox.Data;
-using Sandbox.Data.Entity;
+﻿using Sandbox.Data;
 using Sandbox.WebApp.ViewModels.Group;
+using System;
+using System.Data.Entity;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using System.Linq;
 
 namespace Sandbox.WebApp.Controllers
 {
     //[Authorize]
-    public class GroupController : Controller
+    public class GroupController : ControllerBase
     {
-        DataContext db = new DataContext();
         Guid userId = Guid.Parse("9063bb54f4444eeeb719ae2e4d9edfd0");
 
+
+
+
+        #region Index (list of groups user has permissions to)
+
         // GET: /Groups/
-        public async Task<ActionResult> Index()
+        public Task<ActionResult> Index()
         {
-            var vm = new IndexVM(db);
-            await vm.Load();
-            return View(vm);
+            return View(new IndexVM(db));
         }
 
-        // GET: /Groups/Details/5
+        #endregion
+
+
+
+
+        #region Details page for a specific group
+
+        // GET: /Groups/Details/{name}
         public async Task<ActionResult> Details(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            var vm = new DetailsVM(db, name);
-            await vm.Load();
-            return View(vm);
+            return await View(new DetailsVM(db, name));
 
             //if (Group == null)
             //{
             //    return HttpNotFound();
             //}
         }
+
+        #endregion
+
+
+
+
+        #region Create a new Group
 
         // GET: /Groups/Create
         public ActionResult Create()
@@ -56,7 +65,7 @@ namespace Sandbox.WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,Name,LogoUrl,ProjectCount,LatestProjectTime,LatestProjectName,LatestProjectId")] Group Group)
+        public async Task<ActionResult> Create([Bind(Include="Id,Name,LogoUrl")] Group Group)
         {
             if (ModelState.IsValid)
             {
@@ -69,14 +78,21 @@ namespace Sandbox.WebApp.Controllers
             return View(Group);
         }
 
-        // GET: /Groups/Edit/5
-        public async Task<ActionResult> Edit(Guid? id)
+        #endregion
+
+
+
+
+        #region Edit a Group
+
+        // GET: /Groups/Edit/{name}
+        public async Task<ActionResult> Edit(string name)
         {
-            if (id == null)
+            if (string.IsNullOrWhiteSpace(name))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Group Group = await db.Groups.FindAsync(id);
+            Group Group = await db.Groups.WithName(name).SingleOrDefaultAsync();
             if (Group == null)
             {
                 return HttpNotFound();
@@ -84,55 +100,61 @@ namespace Sandbox.WebApp.Controllers
             return View(Group);
         }
 
-        // POST: /Groups/Edit/5
+        // POST: /Groups/Edit/{name}
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,Name,LogoUrl,ProjectCount,LatestProjectTime,LatestProjectName,LatestProjectId")] Group Group)
+        public async Task<ActionResult> Edit([Bind(Include="Id,Name,LogoUrl")] Group Group)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(Group).State = EntityState.Modified;
+                var dbGroup = await db.Groups.WithId(Group.Id).SingleOrDefaultAsync();
+
+                dbGroup.State = Group.State;
+                dbGroup.Name = Group.Name;
+                dbGroup.LogoUrl = dbGroup.LogoUrl;
+
                 await db.SaveChangesAsync();
+
                 return RedirectToAction("Index");
             }
             return View(Group);
         }
 
-        // GET: /Groups/Delete/5
-        public async Task<ActionResult> Delete(Guid? id)
+        #endregion
+
+
+
+
+        #region Delete a group
+
+        // GET: /Groups/Delete/{name}
+        public async Task<ActionResult> Delete(string name)
         {
-            if (id == null)
+            if (string.IsNullOrWhiteSpace(name))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Group Group = await db.Groups.FindAsync(id);
-            if (Group == null)
+            var group = await db.Groups.WithName(name).SingleOrDefaultAsync();
+            if (group == null)
             {
                 return HttpNotFound();
             }
-            return View(Group);
+            return View(group);
         }
 
-        // POST: /Groups/Delete/5
+        // POST: /Groups/Delete/{name}
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(Guid id)
+        public async Task<ActionResult> DeleteConfirmed(string name)
         {
-            Group Group = await db.Groups.FindAsync(id);
-            db.Groups.Remove(Group);
+            var group = await db.Groups.WithName(name).SingleOrDefaultAsync();
+            db.Groups.Remove(group);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        #endregion
     }
 }

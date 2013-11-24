@@ -17,6 +17,21 @@ namespace Sandbox.Data
             return WithId(entities, Guid.Parse(id));
         }
 
+        public static IQueryable<Group> WithName(this IQueryable<Group> entities, string name)
+        {
+            return entities.Where(o => o.Name.Equals(name));
+        }
+
+        public static IQueryable<Campaign> WithName(this IQueryable<Campaign> entities, string name)
+        {
+            return entities.Where(o => o.Name.Equals(name));
+        }
+
+        public static IQueryable<Project> WithName(this IQueryable<Project> entities, string name)
+        {
+            return entities.Where(o => o.Name.Equals(name));
+        }
+
         public static IQueryable<Group> GetAccessibleGroups(this IQueryable<User> users)
         {
             return users

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Sandbox.WebApp.ViewModels.Group
 {
-    public class IndexVM
+    public class IndexVM : IViewModel
     {
         DataContext context;
         Guid userId = Guid.Parse("9063bb54f4444eeeb719ae2e4d9edfd0");

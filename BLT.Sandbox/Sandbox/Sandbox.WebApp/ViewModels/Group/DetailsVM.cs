@@ -1,4 +1,5 @@
-﻿using Sandbox.Data.Entity;
+﻿using Sandbox.Data;
+using Sandbox.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Sandbox.WebApp.ViewModels.Group
 {
-    public class DetailsVM
+    public class DetailsVM : IViewModel
     {
         DataContext context;
         string groupName;
@@ -30,8 +31,7 @@ namespace Sandbox.WebApp.ViewModels.Group
         public async Task Load()
         {
             var group = await context.Groups
-               .Where(o => o.Name.Equals(groupName))
-               //.Include(o => o.Campaigns)
+               .WithName(groupName)
                .Select(o => 
                    new 
                     {

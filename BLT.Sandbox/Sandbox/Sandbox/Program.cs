@@ -65,6 +65,7 @@ namespace Sandbox
 
             await CreateUser();
             await OutputGroupsForUser();
+            await OutputCampaignsForUser();
 
             //await DeleteGroup();
 
@@ -336,6 +337,29 @@ namespace Sandbox
 
                 foreach (var group in groupsForUser)
                     Console.WriteLine("{0}", group);
+
+                Console.WriteLine();
+            }
+        }
+
+        static async Task OutputCampaignsForUser()
+        {
+            using (var context = CreateContext())
+            {
+                var campaignsForUser = await context
+                    .Users
+                    .WithId(Guid.Parse("9063bb54f4444eeeb719ae2e4d9edfd0"))
+                    .SelectMany(o => o.AccessibleProjects)
+                    .Select(o => o.Project.Campaign)
+                    .Select(o => o.Name)
+                    .Distinct()
+                    .ToListAsync();
+
+                Console.WriteLine("CAMPAIGNS FOR USER:");
+                Console.WriteLine("***********");
+
+                foreach (var campaign in campaignsForUser)
+                    Console.WriteLine("{0}", campaign);
 
                 Console.WriteLine();
             }

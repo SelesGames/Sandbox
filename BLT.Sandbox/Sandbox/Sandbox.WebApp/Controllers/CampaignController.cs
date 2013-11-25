@@ -1,47 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using Sandbox.Data;
+using Sandbox.WebApp.ViewModels.Campaign;
+using System;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using Sandbox.Data;
-using Sandbox.Data.Entity;
 
-namespace Sandbox.Controllers.Campaigns
+namespace Sandbox.WebApp.Controllers
 {
-    public class CampaignController : Controller
+    public class CampaignController : ControllerBase
     {
-        private DataContext db = new DataContext();
+        #region Index (list of groups user has permissions to)
 
         // GET: /Campaigns/
-        public async Task<ActionResult> Index()
+        public Task<ActionResult> Index()
         {
-            var campaigns = db.Campaigns.Include(c => c.Group);
-            return View(await campaigns.ToListAsync());
+            return View(new IndexVM(db));
         }
 
-        // GET: /Campaigns/Details/5
-        public async Task<ActionResult> Details(Guid? id)
+        #endregion
+
+
+
+
+        #region Details page for a specific campaign
+
+        // GET: /Campaigns/Details/{name}
+        public async Task<ActionResult> Details(string name)
         {
-            if (id == null)
+            if (string.IsNullOrEmpty(name))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Campaign campaign = await db.Campaigns.FindAsync(id);
-            if (campaign == null)
-            {
-                return HttpNotFound();
-            }
-            return View(campaign);
+            return await View(new DetailsVM(db, name));
+
+            //if (Group == null)
+            //{
+            //    return HttpNotFound();
+            //}
         }
+
+        #endregion
+
+
+
+
+        #region Create a new Campaign
 
         // GET: /Campaigns/Create
         public ActionResult Create()
         {
-            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name");
             return View();
         }
 
@@ -50,7 +60,7 @@ namespace Sandbox.Controllers.Campaigns
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include="Id,Name,ProjectCount,LatestProjectTime,LatestProjectName,GroupId,LatestProjectId")] Campaign campaign)
+        public async Task<ActionResult> Create([Bind(Include = "Id,State,Name,ImageUrl")] Campaign campaign)
         {
             if (ModelState.IsValid)
             {
@@ -60,51 +70,87 @@ namespace Sandbox.Controllers.Campaigns
                 return RedirectToAction("Index");
             }
 
-            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", campaign.GroupId);
             return View(campaign);
         }
 
-        // GET: /Campaigns/Edit/5
-        public async Task<ActionResult> Edit(Guid? id)
+        #endregion
+
+
+
+
+        #region Edit a Campaign
+
+        // GET: /Campaigns/Edit/{name}
+        public async Task<ActionResult> Edit(string name)
         {
-            if (id == null)
+            if (string.IsNullOrWhiteSpace(name))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Campaign campaign = await db.Campaigns.FindAsync(id);
+            Campaign campaign = await db.Campaigns.WithName(name).SingleOrDefaultAsync();
             if (campaign == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", campaign.GroupId);
             return View(campaign);
         }
 
-        // POST: /Campaigns/Edit/5
+        // POST: /Campaigns/Edit/{name}
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="Id,Name,ProjectCount,LatestProjectTime,LatestProjectName,GroupId,LatestProjectId")] Campaign campaign)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,State,Name,ImageUrl")] Campaign campaign)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(campaign).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                var dbCampaign = await db.Campaigns.WithId(campaign.Id).SingleOrDefaultAsync();
+
+                // update via optimistic concurrency, database wins
+                // http://msdn.microsoft.com/en-us/data/jj592904.aspx
+                bool saveFailed;
+                do
+                {
+                    saveFailed = false;
+
+                    try
+                    {
+                        dbCampaign.State = campaign.State;
+                        dbCampaign.Name = campaign.Name;
+                        dbCampaign.ImageUrl = campaign.ImageUrl;
+
+                        await db.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException ex)
+                    {
+                        saveFailed = true;
+
+                        // Update the values of the entity that failed to save from the store
+                        ex.Entries.Single().Reload();
+                    }
+
+                } while (saveFailed);
+
                 return RedirectToAction("Index");
             }
-            ViewBag.GroupId = new SelectList(db.Groups, "Id", "Name", campaign.GroupId);
             return View(campaign);
         }
 
-        // GET: /Campaigns/Delete/5
-        public async Task<ActionResult> Delete(Guid? id)
+        #endregion
+
+
+
+
+        #region Delete a campaign
+
+        // GET: /Campaigns/Delete/{name}
+        public async Task<ActionResult> Delete(string name)
         {
-            if (id == null)
+            if (string.IsNullOrWhiteSpace(name))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Campaign campaign = await db.Campaigns.FindAsync(id);
+            var campaign = await db.Campaigns.WithName(name).SingleOrDefaultAsync();
             if (campaign == null)
             {
                 return HttpNotFound();
@@ -112,24 +158,17 @@ namespace Sandbox.Controllers.Campaigns
             return View(campaign);
         }
 
-        // POST: /Campaigns/Delete/5
+        // POST: /Campaigns/Delete/{name}
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(Guid id)
+        public async Task<ActionResult> DeleteConfirmed(string name)
         {
-            Campaign campaign = await db.Campaigns.FindAsync(id);
+            var campaign = await db.Campaigns.WithName(name).SingleOrDefaultAsync();
             db.Campaigns.Remove(campaign);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        #endregion
     }
 }

@@ -1,6 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 
-namespace System.Collections.Generic
+namespace System.Collections.ObjectModel
 {
     public static class IEnumerableExtensions
     {

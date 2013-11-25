@@ -171,6 +171,7 @@
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\CampaignController.cs" />
     <Compile Include="ViewModels\BoxContainerVM.cs" />
+    <Compile Include="ViewModels\Campaign\DetailsVM.cs" />
     <Compile Include="ViewModels\Campaign\IndexVM.cs" />
     <Compile Include="ViewModels\Group\DetailsVM.cs" />
     <Compile Include="ViewModels\Group\IndexVM.cs" />

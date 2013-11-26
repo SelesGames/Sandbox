@@ -182,6 +182,7 @@
     <Content Include="App_Data\test_db_log.ldf">
       <DependentUpon>test_db.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\200x175.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />

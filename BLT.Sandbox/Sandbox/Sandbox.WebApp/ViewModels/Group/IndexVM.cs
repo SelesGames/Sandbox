@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Sandbox.WebApp.ViewModels.Group
 {
+    /// <summary>
+    /// Shows a list of projects for a given campaign.
+    /// </summary>
     public class IndexVM : IViewModel
     {
         DataContext context;

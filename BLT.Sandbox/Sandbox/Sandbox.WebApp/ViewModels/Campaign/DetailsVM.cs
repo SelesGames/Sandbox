@@ -29,19 +29,29 @@ namespace Sandbox.WebApp.ViewModels.Campaign
 
         public async Task Load()
         {
-            var group = await context.Campaigns
-               .WithName(campaignName)
-               .Select(o => 
-                   new 
+            var group = await context.Users
+                .WithId(userId)
+                .SelectMany(o => o.AccessibleProjects)
+                .Select(o => o.Project.Campaign)
+                .WithName(campaignName)
+                .Distinct()
+                .Select(o => 
+                    new 
                     {
                         Name = o.Name,
                         ImageUrl = o.ImageUrl,
                         LatestProjectTime = o.LatestProjectTime,
                         Projects = o.Projects
+                            .OrderByDescending(c => c.LatestRoundModified)
                             .Select(c => new BoxContainerVM { Name = c.Name, ImageUrl = c.ImageUrl })
                             .ToList()
                     })
                .SingleOrDefaultAsync();
+
+            if (group == null)
+            {
+                throw new Exception("no matching campaign");
+            }
 
             this.Name = group.Name;
             this.ImageUrl = group.ImageUrl;

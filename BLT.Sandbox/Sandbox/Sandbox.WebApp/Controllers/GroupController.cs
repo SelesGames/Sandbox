@@ -2,11 +2,11 @@
 using Sandbox.WebApp.ViewModels.Group;
 using System;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using System.Linq;
-using System.Data.Entity.Infrastructure;
 
 namespace Sandbox.WebApp.Controllers
 {

@@ -257,6 +257,29 @@ namespace Sandbox
 
                 await context.SaveChangesAsync();
             }
+
+            using (var context = CreateContext())
+            {
+                var campaigns = await context.Campaigns.ToListAsync();
+
+                foreach (var campaign in campaigns)
+                {
+                    campaign.Add(
+                        new Project
+                        {
+                            Id = Guid.NewGuid(),
+                            Name = "Banners"
+                        });
+                    campaign.Add(
+                        new Project
+                        {
+                            Id = Guid.NewGuid(),
+                            Name = "Website"
+                        });
+                }
+
+                await context.SaveChangesAsync();
+            }
         }
 
         static async Task OutputProjects()

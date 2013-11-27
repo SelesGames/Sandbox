@@ -20,8 +20,6 @@ namespace Sandbox.WebApp.ViewModels.Group
         public string LatestProjectTime { get; set; }
         public ObservableCollection<BoxContainerVM> Campaigns { get; set; }
 
-        public DetailsVM() { }
-
         public DetailsVM(DataContext context, string groupName)
         {
             this.context = context;

@@ -19,8 +19,6 @@ namespace Sandbox.WebApp.ViewModels.Campaign
         public string LatestProjectTime { get; set; }
         public ObservableCollection<BoxContainerVM> Projects { get; set; }
 
-        public DetailsVM() { }
-
         public DetailsVM(DataContext context, string campaignName)
         {
             this.context = context;
@@ -29,7 +27,7 @@ namespace Sandbox.WebApp.ViewModels.Campaign
 
         public async Task Load()
         {
-            var group = await context.Users
+            var campaign = await context.Users
                 .WithId(userId)
                 .SelectMany(o => o.AccessibleProjects)
                 .Select(o => o.Project.Campaign)
@@ -48,15 +46,15 @@ namespace Sandbox.WebApp.ViewModels.Campaign
                     })
                .SingleOrDefaultAsync();
 
-            if (group == null)
+            if (campaign == null)
             {
                 throw new Exception("no matching campaign");
             }
 
-            this.Name = group.Name;
-            this.ImageUrl = group.ImageUrl;
-            this.LatestProjectTime = group.LatestProjectTime.ToString();
-            this.Projects = group.Projects.ToObservableCollection();
+            this.Name = campaign.Name;
+            this.ImageUrl = campaign.ImageUrl;
+            this.LatestProjectTime = campaign.LatestProjectTime.ToString();
+            this.Projects = campaign.Projects.ToObservableCollection();
         }
     }
 }

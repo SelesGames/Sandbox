@@ -176,6 +176,7 @@
     <Compile Include="ViewModels\Group\DetailsVM.cs" />
     <Compile Include="ViewModels\Group\IndexVM.cs" />
     <Compile Include="ViewModels\IViewModel.cs" />
+    <Compile Include="ViewModels\Project\DetailsVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\test_db.mdf" />

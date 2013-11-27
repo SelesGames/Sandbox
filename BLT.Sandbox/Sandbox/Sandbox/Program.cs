@@ -4,6 +4,7 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using VM = Sandbox.WebApp.ViewModels;
 
 namespace Sandbox
 {
@@ -11,43 +12,20 @@ namespace Sandbox
     {
         static void Main(string[] args)
         {
-            Initialize().Wait();
-            //RunTest().Wait();
+            try
+            {
+                Initialize().Wait();
+                TestViewModels().Wait();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
             while (true)
                 Console.Read();
         }
-
-        //private static async System.Threading.Tasks.Task RunTest()
-        //{
-        //    var dataContext = CreateContext();
-
-        //    var userId = Guid.NewGuid();
-        //    var categoryId = Guid.NewGuid();
-
-        //    var userPostsByCategory = await dataContext
-        //        .Users
-        //        //.Where(o => userId == o.UserId)
-        //        .SelectMany(o => o.Campaigns)
-        //        .SelectMany(o => o.Projects)
-        //        .Where(o => categoryId == o.CategoryId)
-        //        .Select(o => o.Name)
-        //        .AsNoTracking()
-        //        .ToListAsync();
-
-        //    var newUser = new User
-        //    {
-        //        UserId = Guid.NewGuid(),
-        //    };
-        //    dataContext.Users.Add(newUser);
-        //    await dataContext.SaveChangesAsync();
-
-            
-
-        //    var users = await dataContext.Users.Select(o => o.Id).ToListAsync();
-        //    foreach (var user in users)
-        //        Console.WriteLine(user);
-        //}
 
         static async Task Initialize()
         {
@@ -74,6 +52,28 @@ namespace Sandbox
             //await OutputProjects();
         }
 
+        static async Task TestViewModels()
+        {
+            using (var context = CreateContext())
+            {
+                var viewModels = new VM.IViewModel[]
+                {
+                    new VM.Group.IndexVM(context),
+                    new VM.Group.DetailsVM(context, "Marvel"),
+                    new VM.Campaign.IndexVM(context),
+                    new VM.Campaign.DetailsVM(context, "Avengers 3"),
+                    new VM.Project.DetailsVM(context, "Avengers 3", "Avengers Blog #2"),
+                };
+
+                await Task.WhenAll(viewModels.Select(o => o.Load()));
+            }
+        }
+
+
+
+
+        #region Modify database data (create/edit/delete)
+
         static async Task CreateGroups()
         {
             using (var context = CreateContext())
@@ -97,22 +97,6 @@ namespace Sandbox
                 });
 
                 await context.SaveChangesAsync();
-            }
-        }
-
-        static async Task OutputGroups()
-        {
-            using (var context = CreateContext())
-            {
-                Console.WriteLine("GroupS:");
-                Console.WriteLine("***********");
-
-                var Groups = await context.Groups.ToListAsync();
-
-                foreach (var Group in Groups.Select(o => o.Name))
-                    Console.WriteLine(Group);
-
-                Console.WriteLine();
             }
         }
 
@@ -192,28 +176,6 @@ namespace Sandbox
             }
         }
 
-        static async Task OutputCampaigns()
-        {
-            using (var context = CreateContext())
-            {
-                var campaigns = await context
-                    .Campaigns
-                    .Include(o => o.Group)  // tells the query to *eager* load Group
-                    .Select(o => new { GroupName = o.Group.Name, CampaignName = o.Name })
-                    .OrderBy(o => o.GroupName)
-                    .ThenBy(o => o.CampaignName)
-                    .ToListAsync();
-
-                Console.WriteLine("CAMPAIGNS:");
-                Console.WriteLine("***********");
-
-                foreach (var campaign in campaigns)
-                    Console.WriteLine("{0} - {1}", campaign.GroupName, campaign.CampaignName);
-
-                Console.WriteLine();
-            }
-        }
-
         static async Task AddProjectsToCampaigns()
         {
             using (var context = CreateContext())
@@ -282,30 +244,6 @@ namespace Sandbox
             }
         }
 
-        static async Task OutputProjects()
-        {
-            using (var context = CreateContext())
-            {
-                var projects = await context
-                    .Projects
-                    .Include(o => o.Group)  // tells the query to *eager* load Group
-                    .Include(o => o.Campaign)
-                    .Select(o => new { GroupName = o.Group.Name, CampaignName = o.Campaign.Name, ProjectName = o.Name })
-                    .OrderBy(o => o.GroupName)
-                    .ThenBy(o => o.CampaignName)
-                    .ThenBy(o => o.ProjectName)
-                    .ToListAsync();
-
-                Console.WriteLine("PROJECTS:");
-                Console.WriteLine("***********");
-
-                foreach (var o in projects)
-                    Console.WriteLine("{0} - {1} - {2}", o.GroupName, o.CampaignName, o.ProjectName);
-
-                Console.WriteLine();
-            }
-        }
-
         static async Task DeleteGroup()
         {
             using (var context = CreateContext())
@@ -340,6 +278,75 @@ namespace Sandbox
 
                 context.Users.Add(user);
                 await context.SaveChangesAsync();
+            }
+        }
+
+        #endregion
+
+
+
+
+        #region Output to Console
+
+        static async Task OutputGroups()
+        {
+            using (var context = CreateContext())
+            {
+                Console.WriteLine("GroupS:");
+                Console.WriteLine("***********");
+
+                var Groups = await context.Groups.ToListAsync();
+
+                foreach (var Group in Groups.Select(o => o.Name))
+                    Console.WriteLine(Group);
+
+                Console.WriteLine();
+            }
+        }
+
+        static async Task OutputCampaigns()
+        {
+            using (var context = CreateContext())
+            {
+                var campaigns = await context
+                    .Campaigns
+                    .Include(o => o.Group)  // tells the query to *eager* load Group
+                    .Select(o => new { GroupName = o.Group.Name, CampaignName = o.Name })
+                    .OrderBy(o => o.GroupName)
+                    .ThenBy(o => o.CampaignName)
+                    .ToListAsync();
+
+                Console.WriteLine("CAMPAIGNS:");
+                Console.WriteLine("***********");
+
+                foreach (var campaign in campaigns)
+                    Console.WriteLine("{0} - {1}", campaign.GroupName, campaign.CampaignName);
+
+                Console.WriteLine();
+            }
+        }
+
+        static async Task OutputProjects()
+        {
+            using (var context = CreateContext())
+            {
+                var projects = await context
+                    .Projects
+                    .Include(o => o.Group)  // tells the query to *eager* load Group
+                    .Include(o => o.Campaign)
+                    .Select(o => new { GroupName = o.Group.Name, CampaignName = o.Campaign.Name, ProjectName = o.Name })
+                    .OrderBy(o => o.GroupName)
+                    .ThenBy(o => o.CampaignName)
+                    .ThenBy(o => o.ProjectName)
+                    .ToListAsync();
+
+                Console.WriteLine("PROJECTS:");
+                Console.WriteLine("***********");
+
+                foreach (var o in projects)
+                    Console.WriteLine("{0} - {1} - {2}", o.GroupName, o.CampaignName, o.ProjectName);
+
+                Console.WriteLine();
             }
         }
 
@@ -387,6 +394,10 @@ namespace Sandbox
                 Console.WriteLine();
             }
         }
+
+        #endregion
+
+
 
 
         static DataContext CreateContext()

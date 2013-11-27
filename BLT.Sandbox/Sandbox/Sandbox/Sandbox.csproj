@@ -64,6 +64,10 @@
       <Project>{3755fd7b-f743-4fb1-98cc-3ac7a30531fb}</Project>
       <Name>Sandbox.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sandbox.WebApp\Sandbox.WebApp.csproj">
+      <Project>{a401e1bb-51de-4ec9-bb75-ad75be58591a}</Project>
+      <Name>Sandbox.WebApp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

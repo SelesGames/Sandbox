@@ -26,7 +26,7 @@ namespace Sandbox.WebApp.Controllers
 
 
 
-        #region Details page for a specific campaign
+        #region Details page for a specific campaign (includes list of projects for a campaign)
 
         // GET: /{campaignName}
         //[Route("{campaignName}")]
@@ -176,11 +176,11 @@ namespace Sandbox.WebApp.Controllers
 
 
 
-        //#region View Projects for campaign
+        //#region Details page for a specific project (also includes list of contents for latest round of project)
 
         //// GET: /{campaignName}/{projectName/
         //[Route("{campaignName}/{projectName}")]
-        //public Task<ActionResult> ProjectsIndex(string campaignName)
+        //public Task<ActionResult> ProjectDetailsVM(string campaignName, string projectName)
         //{
         //    return View(new ProjectsIndexVM(db, campaignName));
         //}

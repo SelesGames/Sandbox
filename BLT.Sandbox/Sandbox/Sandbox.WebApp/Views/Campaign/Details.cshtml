@@ -1,66 +1,22 @@
-﻿@model Sandbox.Data.Campaign
+﻿@model Sandbox.WebApp.ViewModels.Campaign.DetailsVM
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = @Model.Name;
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Campaign</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Group.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Group.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ProjectCount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ProjectCount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LatestProjectTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LatestProjectTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LatestProjectName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LatestProjectName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LatestProjectId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LatestProjectId)
-        </dd>
-
-    </dl>
+<h2>@Model.Name <small>@Model.LatestProjectTime</small></h2>
+<div class="row">
+    <div class="col-xs-12">
+        <!-- todo <img src="@Model.ImageUrl" alt="@Model.Name" /> -->
+    </div>
+    @foreach (var project in Model.Projects)
+    {
+        <div class="col-xs-12 col-sm-6 col-md-3">
+            <a class="fill-div" href="/Project/Details?name=@project.Name">
+                <img src="/Content/200x175.png" alt="@project.Name" />
+                <span class="text-overlay" onclick="window.location.href='/Project/Details?name=@project.Name'">@project.Name</span>
+            </a>
+        </div>
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<script src="/Scripts/text-overlay.js" type="text/javascript"></script>

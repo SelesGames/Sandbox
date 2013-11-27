@@ -6,58 +6,19 @@
 
 @foreach (var item in Model.Campaigns)
 {
+   <h2>@item.GroupName</h2>
    <div class="row">
-       <h2>@item.GroupName</h2>
        @foreach (var groupsCampaign in item.Campaigns)
        {
-           <div class="col-xs-6 col-sm-5 col-md-3">
-               <a class="fill-div" href="">
-                   <img src="/Content/200x175.png" /><br/>
-                   <span>@groupsCampaign.Name (url @groupsCampaign.ImageUrl)</span>
+           <div class="col-xs-12 col-sm-6 col-md-3">
+               <a class="fill-div" href="/Campaign/Details?name=@groupsCampaign.Name">
+                   <!-- todo [img url @groupsCampaign.ImageUrl] -->
+                   <img src="/Content/200x175.png" />
+                   <span class="text-overlay" onclick="window.location.href='/Campaign/Details?name=@groupsCampaign.Name'">@groupsCampaign.Name</span>
                </a>
-            </div>
-           
-           //Additional temp layout test divs
-           <div class="col-xs-6 col-sm-5 col-md-3">
-               <a class="fill-div" href="">
-                   <img src="/Content/200x175.png" /><br/>
-                   <span>@groupsCampaign.Name</span>
-               </a>
-            </div>
-           <div class="col-xs-6 col-sm-5 col-md-3">
-               <a class="fill-div" href="">
-                   <img src="/Content/200x175.png" /><br/>
-                   <span>@groupsCampaign.Name</span>
-               </a>
-            </div>
-           <div class="col-xs-6 col-sm-5 col-md-3">
-               <a class="fill-div" href="">
-                   <img src="/Content/200x175.png" /><br/>
-                   <span>@groupsCampaign.Name</span>
-               </a>
-            </div>
-           <div class="col-xs-6 col-sm-5 col-md-3">
-               <a class="fill-div" href="">
-                   <img src="/Content/200x175.png" /><br/>
-                   <span>@groupsCampaign.Name</span>
-               </a>
-            </div>
-           <div class="col-xs-6 col-sm-5 col-md-3">
-               <a class="fill-div" href="">
-                   <img src="/Content/200x175.png" /><br/>
-                   <span>@groupsCampaign.Name</span>
-               </a>
-            </div>
-           <div class="col-xs-6 col-sm-5 col-md-3">
-               <a class="fill-div" href="">
-                   <img src="/Content/200x175.png" /><br/>
-                   <span>@groupsCampaign.Name</span>
-               </a>
-            </div>
-           //End temp layout test divs
-           
+           </div>
        }
    </div>
 }
-
+<script src="/Scripts/text-overlay.js" type="text/javascript"></script>
 

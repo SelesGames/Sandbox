@@ -42,7 +42,7 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
-
+/* required by text-overlay.js */
 a.fill-div {
     display:block;
     height:100%;
@@ -59,11 +59,10 @@ a.fill-div img{
     height:auto;
 }
 
-a.fill-div span{
+a.fill-div>span.text-overlay{
     font-size: 18px;
     color:black;
-    position:relative;
-    top:-125px;
-    display:block;
+    position: absolute;
+    display:none;
     text-align:center;
 }

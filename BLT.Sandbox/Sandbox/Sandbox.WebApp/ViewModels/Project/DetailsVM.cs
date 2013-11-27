@@ -31,19 +31,28 @@ namespace Sandbox.WebApp.ViewModels.Project
 
         public async Task Load()
         {
-            var project = await context.Users
-                .WithId(userId)
-                .SelectMany(o => o.AccessibleProjects)
-                .Select(o => o.Project.Campaign)
-                .WithName(campaignName).Distinct()
-                .SelectMany(o => o.Projects)
-                .WithName(projectName).Distinct()
+            var project = await context.Projects
+                .WithName(projectName)
+                .Where(o => context.Users
+                    .Where(u => u.Id == userId)
+                    .SelectMany(u => u.AccessibleProjects)
+                    .Any(p => p.ProjectId == o.Id && p.Project.Campaign.Name.Equals(campaignName)))
+            
+            
+            //var project = await context.Users
+            //    .WithId(userId)
+            //    .SelectMany(o => o.AccessibleProjects)
+            //    .Select(o => o.Project.Campaign)
+            //    .WithName(campaignName).Distinct()
+            //    .SelectMany(o => o.Projects)
+            //    .WithName(projectName).Distinct()
+                .Include(o => o.Rounds.Select(r => r.Contents))
                 .Select(o =>
                     new
                     {
                         Name = o.Name,
                         ImageUrl = o.ImageUrl,
-                        Rounds = o.Rounds.AsQueryable().OrderByDescending(r => r.CreatedOn).Include(r => r.Contents)
+                        Rounds = o.Rounds.OrderByDescending(r => r.CreatedOn)
                     })
                .SingleOrDefaultAsync();
 

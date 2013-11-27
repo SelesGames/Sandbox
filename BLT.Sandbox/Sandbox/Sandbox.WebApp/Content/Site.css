@@ -42,6 +42,11 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
+/* matches reg h2*/
+h2 small{
+    color: #333333;
+}
+
 /* required by text-overlay.js */
 a.fill-div {
     display:block;
@@ -66,3 +71,16 @@ a.fill-div>span.text-overlay{
     display:none;
     text-align:center;
 }
+
+/* /Project/Details */
+div.project-round{
+    margin-top: 20px;
+}
+
+@media (max-width: 768px ) {
+    img.fluid-image {
+        width: 100%;
+        height: auto;
+    }
+}
+

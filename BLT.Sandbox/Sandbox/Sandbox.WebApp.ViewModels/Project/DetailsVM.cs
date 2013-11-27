@@ -13,8 +13,10 @@ namespace Sandbox.WebApp.ViewModels.Project
         DataContext context;
         string campaignName;
         string projectName;
+        string roundNumber;
         Guid userId = Guid.Parse("9063bb54f4444eeeb719ae2e4d9edfd0");
 
+        public string CampaignName { get { return this.campaignName; } }
         public string Name { get; set; }
         public string ImageUrl { get; set; }
 
@@ -27,6 +29,12 @@ namespace Sandbox.WebApp.ViewModels.Project
             this.context = context;
             this.campaignName = campaignName;
             this.projectName = projectName;
+        }
+
+        public DetailsVM(DataContext context, string campaignName, string projectName, string roundNumber)
+            : this(context, campaignName, projectName)
+        {
+            this.roundNumber = roundNumber;
         }
 
         public async Task Load()
@@ -64,7 +72,9 @@ namespace Sandbox.WebApp.ViewModels.Project
             this.Name = project.Name;
             this.ImageUrl = project.ImageUrl;
             this.Rounds = project.Rounds.ToObservableCollection();
-            this.SelectedRound = Rounds.FirstOrDefault();
+            this.SelectedRound = (null != roundNumber)
+                ? this.Rounds.Where(r => r.RoundNumber == this.roundNumber).FirstOrDefault() 
+                : this.Rounds.FirstOrDefault();
             this.RoundContents = Rounds.Take(1)
                 .SelectMany(o => o.Contents)
                 .OrderBy(o => o.ContentIndex)

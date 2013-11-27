@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Sandbox.Data
 {
@@ -43,6 +42,21 @@ namespace Sandbox.Data
         public void Remove(Project project)
         {
             Projects.Remove(project);
+        }
+
+        public Project AddProject(string name, string imageUrl = null, State state = State.Active)
+        {
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("name");
+
+            var project = new Project
+            {
+                Id = Guid.NewGuid(),
+                Name = name,
+                ImageUrl = imageUrl,
+                State = state,
+            };
+            Add(project);
+            return project;
         }
 
         #endregion

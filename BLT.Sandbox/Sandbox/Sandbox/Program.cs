@@ -244,6 +244,19 @@ namespace Sandbox
             }
         }
 
+        static async Task AddRoundsToProjects()
+        {
+            using (var context = CreateContext())
+            {
+                var projects = await context.Projects.ToListAsync();
+
+                foreach (var project in projects)
+                {
+                    var content = new Content { };
+                }
+            }
+        }
+
         static async Task DeleteGroup()
         {
             using (var context = CreateContext())

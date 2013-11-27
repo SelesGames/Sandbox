@@ -15,6 +15,7 @@ namespace Sandbox.WebApp.Controllers
         #region Index (list of groups user has permissions to)
 
         // GET: /Campaigns/
+        //[Route("Campaigns")]
         public Task<ActionResult> Index()
         {
             return View(new IndexVM(db));
@@ -27,7 +28,8 @@ namespace Sandbox.WebApp.Controllers
 
         #region Details page for a specific campaign
 
-        // GET: /Campaigns/Details/{name}
+        // GET: /{campaignName}
+        //[Route("{campaignName}")]
         public async Task<ActionResult> Details(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -170,5 +172,19 @@ namespace Sandbox.WebApp.Controllers
         }
 
         #endregion
+
+
+
+
+        //#region View Projects for campaign
+
+        //// GET: /{campaignName}/{projectName/
+        //[Route("{campaignName}/{projectName}")]
+        //public Task<ActionResult> ProjectsIndex(string campaignName)
+        //{
+        //    return View(new ProjectsIndexVM(db, campaignName));
+        //}
+
+        //#endregion
     }
 }

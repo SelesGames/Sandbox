@@ -15,7 +15,7 @@ namespace Sandbox
             try
             {
                 Initialize().Wait();
-                TestViewModels().Wait();
+                //TestViewModels().Wait();
             }
             catch(Exception e)
             {
@@ -279,6 +279,8 @@ namespace Sandbox
 
                     project.Add(round);
                 }
+
+                await context.SaveChangesAsync();
             }
         }
 

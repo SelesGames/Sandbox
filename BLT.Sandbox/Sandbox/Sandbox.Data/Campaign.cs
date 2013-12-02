@@ -50,7 +50,6 @@ namespace Sandbox.Data
 
             var project = new Project
             {
-                Id = Guid.NewGuid(),
                 Name = name,
                 ImageUrl = imageUrl,
                 State = state,

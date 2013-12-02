@@ -7,6 +7,11 @@ namespace Sandbox.Data
         public Guid Id { get; set; }
         public virtual byte[] RowVersion { get; set; }
 
+        public EntityBase()
+        {
+            Id = Guid.NewGuid();
+        }
+
 
 
 

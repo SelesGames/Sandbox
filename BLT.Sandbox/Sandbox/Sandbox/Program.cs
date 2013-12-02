@@ -40,6 +40,7 @@ namespace Sandbox
             await OutputCampaigns();
             await AddProjectsToCampaigns();
             await OutputProjects();
+            await AddRoundsToProjects();
 
             await CreateUser();
             await OutputGroupsForUser();
@@ -226,18 +227,8 @@ namespace Sandbox
 
                 foreach (var campaign in campaigns)
                 {
-                    campaign.Add(
-                        new Project
-                        {
-                            Id = Guid.NewGuid(),
-                            Name = "Banners"
-                        });
-                    campaign.Add(
-                        new Project
-                        {
-                            Id = Guid.NewGuid(),
-                            Name = "Website"
-                        });
+                    campaign.AddProject("Banners");
+                    campaign.AddProject("Website");
                 }
 
                 await context.SaveChangesAsync();
@@ -252,7 +243,41 @@ namespace Sandbox
 
                 foreach (var project in projects)
                 {
-                    var content = new Content { };
+                    var round = new Round
+                    {
+                        CreatedOn = DateTime.Now,
+                        State = RoundState.Published,
+                        RoundNumber = "Round 1",
+                    };
+
+                    int index = 0;
+
+                    round.Add(new Content
+                    {
+                        ContentIndex = index++,
+                        Description = "Photobomb goat",
+                        ContentUrl = "http://s3-ec.buzzfed.com/static/enhanced/terminal05/2012/5/10/12/enhanced-buzz-7611-1336668483-0.jpg",
+                    });
+                    round.Add(new Content
+                    {
+                        ContentIndex = index++,
+                        Description = "Photobomb cat",
+                        ContentUrl = "http://s3-ec.buzzfed.com/static/enhanced/terminal05/2012/5/10/12/enhanced-buzz-7573-1336668523-2.jpg",
+                    });
+                    round.Add(new Content
+                    {
+                        ContentIndex = index++,
+                        Description = "Photobomb bear",
+                        ContentUrl = "http://s3-ec.buzzfed.com/static/enhanced/web04/2012/5/10/16/enhanced-buzz-24345-1336682077-8.jpg",
+                    });
+                    round.Add(new Content
+                    {
+                        ContentIndex = index++,
+                        Description = "Photobomb hippo",
+                        ContentUrl = "http://s3-ec.buzzfed.com/static/enhanced/terminal05/2012/5/10/12/enhanced-buzz-6968-1336668519-2.jpg",
+                    });
+
+                    project.Add(round);
                 }
             }
         }

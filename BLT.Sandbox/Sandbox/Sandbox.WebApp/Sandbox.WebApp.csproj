@@ -170,13 +170,6 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\CampaignController.cs" />
-    <Compile Include="ViewModels\BoxContainerVM.cs" />
-    <Compile Include="ViewModels\Campaign\DetailsVM.cs" />
-    <Compile Include="ViewModels\Campaign\IndexVM.cs" />
-    <Compile Include="ViewModels\Group\DetailsVM.cs" />
-    <Compile Include="ViewModels\Group\IndexVM.cs" />
-    <Compile Include="ViewModels\IViewModel.cs" />
-    <Compile Include="ViewModels\Project\DetailsVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\test_db.mdf" />
@@ -261,6 +254,10 @@
     <ProjectReference Include="..\Sandbox.Data\Sandbox.Data.csproj">
       <Project>{3755fd7b-f743-4fb1-98cc-3ac7a30531fb}</Project>
       <Name>Sandbox.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sandbox.WebApp.ViewModels\Sandbox.WebApp.ViewModels.csproj">
+      <Project>{93b900b9-70a9-4e57-b8ae-a70d6ff6e381}</Project>
+      <Name>Sandbox.WebApp.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

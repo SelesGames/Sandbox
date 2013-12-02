@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{948AF7EE-BA1B-4C51-9838-3E79C4F5F8A2}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{93B900B9-70A9-4E57-B8AE-A70D6FF6E381}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sandbox</RootNamespace>
-    <AssemblyName>Sandbox</AssemblyName>
+    <RootNamespace>Sandbox.WebApp.ViewModels</RootNamespace>
+    <AssemblyName>Sandbox.WebApp.ViewModels</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,21 +39,24 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="BoxContainerVM.cs" />
+    <Compile Include="Campaign\DetailsVM.cs" />
+    <Compile Include="Campaign\IndexVM.cs" />
+    <Compile Include="Group\DetailsVM.cs" />
+    <Compile Include="Group\IndexVM.cs" />
+    <Compile Include="IViewModel.cs" />
+    <Compile Include="Project\DetailsVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{defcb640-f763-40b8-ada9-b177382d6e97}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sandbox.Data.Entity\Sandbox.Data.Entity.csproj">
       <Project>{c91bffc7-37b2-4277-b69a-4c3ad800a663}</Project>
       <Name>Sandbox.Data.Entity</Name>
@@ -64,10 +65,10 @@
       <Project>{3755fd7b-f743-4fb1-98cc-3ac7a30531fb}</Project>
       <Name>Sandbox.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sandbox.WebApp.ViewModels\Sandbox.WebApp.ViewModels.csproj">
-      <Project>{93b900b9-70a9-4e57-b8ae-a70d6ff6e381}</Project>
-      <Name>Sandbox.WebApp.ViewModels</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

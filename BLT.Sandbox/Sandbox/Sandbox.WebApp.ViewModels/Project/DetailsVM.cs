@@ -70,5 +70,17 @@ namespace Sandbox.WebApp.ViewModels.Project
                 .OrderBy(o => o.ContentIndex)
                 .ToObservableCollection();
         }
+
+
+
+
+        #region override ToString method
+
+        public override string ToString()
+        {
+            return string.Format("{0} ({1})", Name, ImageUrl);
+        }
+
+        #endregion
     }
 }

@@ -56,5 +56,17 @@ namespace Sandbox.WebApp.ViewModels.Campaign
             this.LatestProjectTime = campaign.LatestProjectTime.ToString();
             this.Projects = campaign.Projects.ToObservableCollection();
         }
+
+
+
+
+        #region override ToString method
+
+        public override string ToString()
+        {
+            return string.Format("{0}", Name);
+        }
+
+        #endregion
     }
 }

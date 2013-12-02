@@ -1,7 +1,6 @@
 ﻿using Sandbox.Data;
 using Sandbox.Data.Entity;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
@@ -47,5 +46,17 @@ namespace Sandbox.WebApp.ViewModels.Group
             this.LatestProjectTime = group.LatestProjectTime.ToString();
             this.Campaigns = group.Campaigns.ToObservableCollection();
         }
+
+
+
+
+        #region override ToString method
+
+        public override string ToString()
+        {
+            return string.Format("{0}", Name);
+        }
+
+        #endregion
     }
 }

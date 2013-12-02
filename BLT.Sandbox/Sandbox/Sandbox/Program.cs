@@ -15,7 +15,7 @@ namespace Sandbox
             try
             {
                 Initialize().Wait();
-                //TestViewModels().Wait();
+                TestViewModels().Wait();
             }
             catch(Exception e)
             {

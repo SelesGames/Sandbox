@@ -14,7 +14,7 @@
                <a class="fill-div" href="/Campaign/Details?name=@groupsCampaign.Name">
                    <!-- todo [img url @groupsCampaign.ImageUrl] -->
                    <img src="/Content/200x175.png" />
-                   <span class="text-overlay" onclick="window.location.href='/Campaign/Details?name=@groupsCampaign.Name'">@groupsCampaign.Name</span>
+                   <span class="text-overlay" onclick="window.location.href='/Campaign/Details?name=@HttpUtility.UrlEncode(groupsCampaign.Name)'">@groupsCampaign.Name</span>
                </a>
            </div>
        }

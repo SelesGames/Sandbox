@@ -1,0 +1,20 @@
+[dbo].[Group] ADD CONSTRAINT [FK_dbo.Group_dbo.Project_LatestProjectId] FOREIGN KEY ([LatestProjectId]) REFERENCES [dbo].[Project] ([Id])
+
+[dbo].[Campaign] ADD CONSTRAINT [FK_dbo.Campaign_dbo.Group_GroupId] FOREIGN KEY ([GroupId]) REFERENCES [dbo].[Group] ([Id]) ON DELETE CASCADE
+[dbo].[Campaign] ADD CONSTRAINT [FK_dbo.Campaign_dbo.Project_LatestProjectId] FOREIGN KEY ([LatestProjectId]) REFERENCES [dbo].[Project] ([Id])
+
+[dbo].[Project] ADD CONSTRAINT [FK_dbo.Project_dbo.Campaign_CampaignId] FOREIGN KEY ([CampaignId]) REFERENCES [dbo].[Campaign] ([Id]) ON DELETE CASCADE
+[dbo].[Project] ADD CONSTRAINT [FK_dbo.Project_dbo.Group_GroupId] FOREIGN KEY ([GroupId]) REFERENCES [dbo].[Group] ([Id])
+
+[dbo].[Round] ADD CONSTRAINT [FK_dbo.Round_dbo.Project_ProjectId] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Project] ([Id]) ON DELETE CASCADE
+
+[dbo].[Content] ADD CONSTRAINT [FK_dbo.Content_dbo.Round_RoundId] FOREIGN KEY ([RoundId]) REFERENCES [dbo].[Round] ([Id]) ON DELETE CASCADE
+
+[dbo].[RoundApproval] ADD CONSTRAINT [FK_dbo.RoundApproval_dbo.Round_RoundId] FOREIGN KEY ([RoundId]) REFERENCES [dbo].[Round] ([Id]) ON DELETE CASCADE
+[dbo].[RoundApproval] ADD CONSTRAINT [FK_dbo.RoundApproval_dbo.User_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[User] ([Id]) ON DELETE CASCADE
+
+[dbo].[User] ADD CONSTRAINT [FK_dbo.User_dbo.Group_GroupId] FOREIGN KEY ([GroupId]) REFERENCES [dbo].[Group] ([Id])
+
+[dbo].[UserProjectPermission] ADD CONSTRAINT [FK_dbo.UserProjectPermission_dbo.Project_ProjectId] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Project] ([Id]) ON DELETE CASCADE
+[dbo].[UserProjectPermission] ADD CONSTRAINT [FK_dbo.UserProjectPermission_dbo.User_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[User] ([Id]) ON DELETE CASCADE
+

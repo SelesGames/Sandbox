@@ -172,19 +172,5 @@ namespace Sandbox.WebApp.Controllers
         }
 
         #endregion
-
-
-
-
-        //#region Details page for a specific project (also includes list of contents for latest round of project)
-
-        //// GET: /{campaignName}/{projectName/
-        //[Route("{campaignName}/{projectName}")]
-        //public Task<ActionResult> ProjectDetailsVM(string campaignName, string projectName)
-        //{
-        //    return View(new ProjectsIndexVM(db, campaignName));
-        //}
-
-        //#endregion
     }
 }

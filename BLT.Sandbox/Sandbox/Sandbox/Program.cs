@@ -278,6 +278,39 @@ namespace Sandbox
                     });
 
                     project.Add(round);
+
+
+                    // add a 2nd round
+                    round = new Round
+                    {
+                        CreatedOn = DateTime.Now + TimeSpan.FromHours(5),
+                        State = RoundState.Published,
+                        RoundNumber = "Round 2",
+                    };
+
+                    index = 0;
+
+                    round.Add(new Content
+                    {
+                        ContentIndex = index++,
+                        Description = "Bat-Cow",
+                        ContentUrl = "http://comicbook.com/wp-content/uploads/2013/05/bat-cow.png",
+                    });
+                    round.Add(new Content
+                    {
+                        ContentIndex = index++,
+                        Description = "Baby seals",
+                        ContentUrl = "http://i.imgur.com/fELVKnI.jpg",
+                    });
+                    round.Add(new Content
+                    {
+                        ContentIndex = index++,
+                        Description = "Fat cat",
+                        ContentUrl = "http://i.imgur.com/TO1hUlp.jpg",
+                    });
+                    
+
+                    project.Add(round);
                 }
 
                 await context.SaveChangesAsync();

@@ -22,13 +22,25 @@ function textOverlayBottom() {
 
 $(function () {
 
-    textOverlay();
-    textOverlayBottom()
     $(window).resize(function () {
         $('.text-overlay').hide();
         $('.text-overlay-bottom').hide();
         textOverlay();
         textOverlayBottom();
     });
+
+    $('.nav-tabs li a').click(function () {
+        setTimeout(function () {
+            textOverlay();
+            textOverlayBottom();
+        }, 200);
+    });
+
+    setTimeout(function () {
+        textOverlay();
+        textOverlayBottom();
+    }, 100);
+    
+    
 
 });

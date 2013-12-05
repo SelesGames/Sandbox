@@ -1,81 +1,139 @@
 ﻿@model Sandbox.Data.Campaign
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit " + @Model.Name;
 }
-
-<h2>Edit</h2>
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Campaign</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.Id)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name)
-                @Html.ValidationMessageFor(model => model.Name)
+<h2>Edit Campaign</h2>
+<div class="row">
+    <div class="col-xs-12">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#info" data-toggle="tab">Info</a></li>
+            <li><a href="#groups" data-toggle="tab">Groups</a></li>
+            <li><a href="#adv" data-toggle="tab">Advanced</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="info">
+                <div class="col-xs-12">
+                    <label for="Name" class="control-label">Campaign Name</label>
+                    <div>
+                        @Html.TextBoxFor(model => model.Name, new { @class = "control col-xs-12" })
+                        @Html.ValidationMessageFor(model => model.Name)
+                    </div>
+                </div>
+                <div class="col-xs-12 space-col">
+                    <label for="image" class="control-label">Campaign Image</label>
+                    <div>
+                        <input type="file" name="image" id="image" />
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProjectCount, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ProjectCount)
-                @Html.ValidationMessageFor(model => model.ProjectCount)
+            <div class="tab-pane fade" id="groups">
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <a class="fill-div gray-box" href="">
+                        <img src="/Content/box.png" />
+                        @* todo: get group name from session *@
+                        <span class="text-overlay">Marvel</span>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <a class="fill-div lightgray-box" href="">
+                        <img src="/Content/box.png" />
+                        <span class="text-overlay glyphicon glyphicon-plus-sign"></span>
+                        <span class="text-overlay-bottom">Add Group</span>
+                    </a>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LatestProjectTime, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LatestProjectTime)
-                @Html.ValidationMessageFor(model => model.LatestProjectTime)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LatestProjectName, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LatestProjectName)
-                @Html.ValidationMessageFor(model => model.LatestProjectName)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.GroupId, "GroupId", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("GroupId", String.Empty)
-                @Html.ValidationMessageFor(model => model.GroupId)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LatestProjectId, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LatestProjectId)
-                @Html.ValidationMessageFor(model => model.LatestProjectId)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="tab-pane fade" id="adv">
+                <h3>Delete this campaign</h3>
+                <b>Once you delete this campaign, it will be deleted forever</b>
+                <a class="btn btn-danger" href="#">Delete Campaign</a>
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <div class="col-xs-12 space-col">
+        <input type="submit" value="Save" class="btn btn-primary pull-right" />
+        <a class="btn btn-default pull-right" style="margin-right:12px;">Cancel</a>
+    </div>
 </div>
+<script src="/Scripts/text-overlay.js" type="text/javascript"></script>
+<script src="/Scripts/image-chooser.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+</script>
+
+
+@*<h2>Edit</h2>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Campaign</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProjectCount, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ProjectCount)
+                    @Html.ValidationMessageFor(model => model.ProjectCount)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LatestProjectTime, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LatestProjectTime)
+                    @Html.ValidationMessageFor(model => model.LatestProjectTime)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LatestProjectName, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LatestProjectName)
+                    @Html.ValidationMessageFor(model => model.LatestProjectName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GroupId, "GroupId", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("GroupId", String.Empty)
+                    @Html.ValidationMessageFor(model => model.GroupId)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LatestProjectId, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LatestProjectId)
+                    @Html.ValidationMessageFor(model => model.LatestProjectId)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

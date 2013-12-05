@@ -62,8 +62,12 @@ namespace Sandbox.WebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,State,Name,ImageUrl")] Campaign campaign)
+        public async Task<ActionResult> Create([Bind(Include = "Id,State,Name,ImageUrl")] Campaign campaign
+            , System.Web.HttpPostedFileBase image)
         {
+            // temp
+            image.SaveAs(@"C:\uploads\" + image.FileName);
+
             if (ModelState.IsValid)
             {
                 campaign.Id = Guid.NewGuid();

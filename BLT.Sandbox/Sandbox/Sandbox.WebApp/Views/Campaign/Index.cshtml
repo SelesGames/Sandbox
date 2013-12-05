@@ -11,7 +11,7 @@
        @foreach (var groupsCampaign in item.Campaigns)
        {
            <div class="col-xs-12 col-sm-6 col-md-3">
-               <a class="fill-div" href="/Campaign/Details?name=@groupsCampaign.Name">
+               <a class="fill-div gray-box" href="/Campaign/Details?name=@groupsCampaign.Name">
                    <!-- todo [img url @groupsCampaign.ImageUrl] -->
                    <img src="/Content/200x175.png" />
                    <span class="text-overlay" onclick="window.location.href='/Campaign/Details?name=@HttpUtility.UrlEncode(groupsCampaign.Name)'">@groupsCampaign.Name</span>

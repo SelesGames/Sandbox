@@ -12,7 +12,7 @@
     @foreach (var project in Model.Projects)
     {
         <div class="col-xs-12 col-sm-6 col-md-3">
-            <a class="fill-div" href="/Project/Details?campaignName=@HttpUtility.UrlEncode(Model.Name)&projectName=@HttpUtility.UrlEncode(project.Name)">
+            <a class="fill-div gray-box" href="/Project/Details?campaignName=@HttpUtility.UrlEncode(Model.Name)&projectName=@HttpUtility.UrlEncode(project.Name)">
                 <img src="/Content/200x175.png" alt="@project.Name" />
                 <span class="text-overlay" onclick="window.location.href='/Project/Details?campaignName=@HttpUtility.UrlEncode(Model.Name)&projectName=@HttpUtility.UrlEncode(project.Name)'">@project.Name</span>
             </a>

@@ -1,0 +1,126 @@
+﻿body {
+    background-color:lightgray;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default
+input,
+select,
+textarea {
+    max-width: 280px;
+} */
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/* matches reg h2*/
+h2 small{
+    color: #333333;
+}
+
+/* required by text-overlay.js */
+a.fill-div {
+    /*background-color: gray;*/
+    display:block;
+    height:100%;
+    width:100%;
+    text-decoration:none;
+}
+
+a.gray-box{
+    background-color: gray;
+}
+a.lightgray-box{
+    border: solid 2px gray;
+}
+
+a.fill-div:hover {
+    text-decoration:none;
+}
+
+a.fill-div img{
+    width:100%;
+    height:auto;
+}
+
+a.fill-div>span.text-overlay{
+    color:black;
+    font-size: 18px;
+    position: absolute;
+    display:none;
+    text-align:center;
+}
+
+a.fill-div>span.text-overlay-bottom{
+    color:gray;
+    font-size: 18px;
+    position: absolute;
+    display:none;
+    text-align:center;
+}
+
+
+a.fill-div>span.dark{
+    opacity:0.5;
+    background-color:black;
+    color:lightgray;
+}
+
+/* /Project/Details */
+div.project-round{
+    margin-top: 20px;
+}
+
+@media (max-width: 768px ) {
+    a.fill-div {
+        margin: 4px 0px;
+    }
+    img.fluid-image {
+        width: 100%;
+        height: auto;
+    }
+}
+
+
+/* /Campaign/Create */
+.space-col{
+    margin: 12px 0px;
+}
+
+.space-col-top{
+    margin-top: 30px;
+}
+
+
+.imageChooserButton{
+    margin: -2px 0px 0px 8px;
+}

@@ -1,0 +1,51 @@
+﻿@model BLT.ClientExtranet.ViewModels.Project.DetailsVM
+
+@{
+    ViewBag.Title = @Model.Name + " - " + @Model.SelectedRound.RoundNumber;
+}
+
+
+<div class="row">
+    <div class="col-xs-7 col-sm-8 col-md-9">
+        <h2>@Model.Name - <small>@Model.SelectedRound.RoundNumber</small></h2>
+    </div>
+    <div class="col-xs-5 col-sm-4 col-md-3">
+        <div class="btn-group pull-right project-round">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                @Model.SelectedRound.RoundNumber <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu round-menu" role="menu">
+                @foreach (var round in Model.Rounds)
+                {
+                    <li>
+                        <a href="/Project/Details?campaignName=@Model.CampaignName&projectName=@Model.Name&roundNumber=@round.RoundNumber">
+                            @round.RoundNumber @if (@Model.SelectedRound.RoundNumber == @round.RoundNumber)
+                            {<span class="glyphicon glyphicon-ok"></span>}
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var content in Model.SelectedRound.Contents)
+    {
+        <div class="col-xs-12">
+            <h3>@content.Description</h3>
+            <img src="@content.ContentUrl" class="fluid-image" />
+            @*@if ("image/jpeg" == @content.ContentType)
+                {
+                    <img src="@content.ContentUrl" />
+                }
+                else
+                {
+                    <p>
+                        @content.ContentType not supported
+                    </p>
+                }*@
+        </div>
+    }
+</div>
+

@@ -112,3 +112,5 @@ UpgradeLog*.XML
 /BLT.Sandbox/Sandbox/Sandbox.WebApp/App_Data/*.mdf
 /BLT.Sandbox/Sandbox/Sandbox.WebApp/App_Data/*.ldf
 /BLT.Sandbox/Sandbox/Sandbox.WebApp/App_Data
+
+/BLT/$tf

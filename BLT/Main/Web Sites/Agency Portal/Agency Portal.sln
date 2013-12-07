@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLT.Websites.Agency.Portal", "BLT.Websites.Agency.Portal\BLT.Websites.Agency.Portal.csproj", "{7855CDD5-56F0-449C-B932-2429B700E47C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{90FED9B3-2A91-4334-82AC-B49F069931DB}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://blt.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = BLT.Websites.Agency.Portal\\BLT.Websites.Agency.Portal.csproj
+		SccProjectName1 = BLT.Websites.Agency.Portal
+		SccLocalPath1 = BLT.Websites.Agency.Portal
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Stage|Any CPU = Stage|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7855CDD5-56F0-449C-B932-2429B700E47C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7855CDD5-56F0-449C-B932-2429B700E47C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7855CDD5-56F0-449C-B932-2429B700E47C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7855CDD5-56F0-449C-B932-2429B700E47C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7855CDD5-56F0-449C-B932-2429B700E47C}.Stage|Any CPU.ActiveCfg = Stage|Any CPU
+		{7855CDD5-56F0-449C-B932-2429B700E47C}.Stage|Any CPU.Build.0 = Stage|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

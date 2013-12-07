@@ -1,0 +1,13 @@
+﻿CREATE TABLE [dbo].[Round] 
+(
+	[SG_KEY] INT NOT NULL PRIMARY KEY NONCLUSTERED IDENTITY,
+	[Id] UNIQUEIDENTIFIER NOT NULL,
+	[ProjectId] UNIQUEIDENTIFIER NOT NULL,
+	[FileCount] INT NOT NULL,
+	[CreatedOn] DATETIME NOT NULL,
+)
+
+GO
+CREATE UNIQUE INDEX [KeyIndex] ON [dbo].[Round] ([Id])
+GO
+CREATE CLUSTERED INDEX [ClusteredProjectIndex] ON [dbo].[Round] ([ProjectId],[SG_KEY])

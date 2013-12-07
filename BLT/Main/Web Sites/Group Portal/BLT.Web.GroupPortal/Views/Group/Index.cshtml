@@ -1,0 +1,39 @@
+﻿@model BLT.ClientExtranet.ViewModels.Group.IndexVM
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            ImageUrl
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Groups) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImageUrl)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { name=item.Name }) |
+            @Html.ActionLink("Details", "Details", new { name = item.Name }) |
+            @Html.ActionLink("Delete", "Delete", new { name = item.Name })
+        </td>
+    </tr>
+}
+
+</table>

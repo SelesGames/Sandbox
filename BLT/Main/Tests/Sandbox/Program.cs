@@ -12,6 +12,7 @@ namespace BLT.ClientExtranet.ConsoleTest
     {
         static void Main(string[] args)
         {
+            // test is github visible
             try
             {
                 Initialize().Wait();

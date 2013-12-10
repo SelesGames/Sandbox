@@ -12,6 +12,9 @@ namespace BLT.ClientExtranet.Data.Models
         public Guid GroupId { get; set; }
         public virtual Group Group { get; set; }
 
+        public string FullName { get; set; }
+        public string Email { get; set; }
+
         public virtual ICollection<UserProjectPermission> AccessibleProjects { get; set; }
 
         public User()

@@ -7,11 +7,15 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using BLT.ClientExtranet.Data.Models;
+using System.Web;
 
 namespace BLT.ClientExtranet.Web.GroupPortal.Controllers
 {
     public class CampaignController : ControllerBase
     {
+
+        const string UPLOADS = @"C:\uploads\";
+
         #region Index (list of groups user has permissions to)
 
         // GET: /Campaigns/
@@ -66,7 +70,8 @@ namespace BLT.ClientExtranet.Web.GroupPortal.Controllers
             , System.Web.HttpPostedFileBase image)
         {
             // temp
-            image.SaveAs(@"C:\uploads\" + image.FileName);
+            if (null != image)
+                image.SaveAs(UPLOADS + image.FileName);
 
             if (ModelState.IsValid)
             {
@@ -106,8 +111,12 @@ namespace BLT.ClientExtranet.Web.GroupPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,State,Name,ImageUrl")] Campaign campaign)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,State,Name,ImageUrl")] Campaign campaign, HttpPostedFileBase image)
         {
+            // temp
+            if (null != image)
+                image.SaveAs(UPLOADS + image.FileName);
+
             if (ModelState.IsValid)
             {
                 var dbCampaign = await db.Campaigns.WithId(campaign.Id).SingleOrDefaultAsync();

@@ -11,7 +11,7 @@ namespace BLT.ClientExtranet.Data.EntityFramework
             switch (System.Environment.MachineName)
             {
                 case "WORKSTATION-1":
-                    _filePath = @"C:\Users\Eric\Documents\Visual Studio 2013\Projects\SelesGames\BLT\BLT.BLT\BLT\BLT.WebApp\App_Data\test_db.mdf";
+                    _filePath = @"C:\Users\Eric\Documents\Visual Studio 2013\Projects\SelesGames\Sandbox\BLT\Main\Web Sites\Group Portal\BLT.Web.GroupPortal\App_Data\test_db.mdf";
                     break;
             }
             return _filePath;
